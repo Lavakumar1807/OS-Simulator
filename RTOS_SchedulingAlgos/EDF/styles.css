@@ -1,0 +1,221 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #3e2723; 
+    margin: 0;
+    padding: 20px;
+    color: #000000; 
+}
+.container {
+    background-color: #f0e4d1; 
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    padding: 30px;
+    max-width: 1000px;
+    margin: auto;
+}
+h1 {
+    text-align: center;
+    color: #000000; 
+}
+
+.input-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.input-section input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #d7ccc8;
+    border-radius: 5px;
+    background-color: #fff8e1; 
+    color: #000000; 
+}
+.input-section button {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.button-group button {
+    padding: 10px 15px;
+    background-color: #4CAF50; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.button-group button:hover, .input-section button:hover {
+    opacity: 0.9;
+}
+#processTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+#processTable th, #processTable td {
+    border: 1px solid #d7ccc8;
+    padding: 10px;
+    text-align: left;
+    color: #000000; 
+}
+#processTable th {
+    background-color: #efebe9; 
+}
+#systemUtilization {
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #efebe9;
+    border-radius: 5px;
+    border-left: 4px solid #4CAF50; 
+    color: #000000; 
+}
+#schedulabilityAnalysis {
+    margin: 20px 0;
+    padding: 10px;
+    border-radius: 5px;
+    color: #000000;
+}
+
+
+#ganttChart {
+    width: 100%;
+    margin-top: 30px;
+    position: relative;
+    background-color: #f8f5f0; 
+    border: 1px solid #d7ccc8;
+    border-radius: 5px;
+    padding: 20px 0;
+    min-height: 200px;
+    overflow-x: auto; 
+}
+
+
+.gantt-container {
+    position: relative;
+    min-height: 150px;
+    margin-bottom: 40px;
+    padding-left: 120px; 
+    min-width: 800px; 
+    width: max-content; 
+}
+
+.gantt-timeline {
+    display: flex;
+    width: 100%;
+    height: 30px;
+    border-top: 1px solid #000000; 
+    position: relative;
+    margin-bottom: 20px;
+}
+.timeline-mark {
+    position: absolute;
+    top: 0;
+    height: 10px;
+    border-left: 1px solid #000000; 
+}
+.timeline-label {
+    position: absolute;
+    top: 10px;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: #000000; 
+}
+.gantt-process-row {
+    height: 40px;
+    position: relative;
+    border-bottom: 1px solid #d7ccc8;
+    margin-bottom: 15px;
+}
+.process-label {
+    position: absolute;
+    left: -100px; 
+    top: 10px;
+    font-weight: bold;
+    width: 80px; 
+    text-align: center;
+    color: #000000;
+}
+.gantt-block {
+    position: absolute;
+    top: 5px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    border-radius: 3px;
+    font-size: 12px;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+.deadline-marker {
+    position: absolute;
+    top: -15px;
+    transform: translateX(-50%);
+    color: #000000; 
+    font-size: 11px;
+    font-weight: bold;
+    text-align: center;
+}
+.deadline-line {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    border-left: 2px dashed #000000; 
+    z-index: 5;
+}
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.gantt-block:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 135%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #000000; 
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: normal;
+    white-space: pre;
+    z-index: 100;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.gantt-block:hover::before {
+    content: "";
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #000000 transparent transparent transparent;
+    z-index: 100;
+}
+
+
+.gantt-legend {
+    margin-top: 20px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.gantt-legend span {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: #e5e5e5 !important;
+    margin-right: 5px;
+}

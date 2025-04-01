@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rate-Monotonic Scheduling</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Rate-Monotonic Scheduling</h1>
+        
+        <div class="input-section">
+            <input type="text" id="processName" placeholder="Process Name">
+            <input type="number" id="period" placeholder="Period">
+            <input type="number" id="executionTime" placeholder="Processing Time">
+            <button onclick="addProcess()">Add Process</button>
+        </div>
+
+        <table id="processTable">
+            <thead>
+                <tr>
+                    <th>Process</th>
+                    <th>Period</th>
+                    <th>Processing Time</th>
+                    <th>Deadline</th>
+                    <th>CPU-Utilization</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="processTableBody"></tbody>
+        </table>
+
+        <div id="systemUtilization" class="status-box"></div>
+        
+        <div class="button-group">
+            <button onclick="runScheduler()" class="primary-btn">Run RMS Scheduler</button>
+            <button onclick="clearGanttChart()">Clear Chart</button>
+        </div>
+
+        <div id="ganttChartContainer">
+            <div id="deadlineMarkers"></div>
+            <div id="ganttChart"></div>
+        </div>
+        
+        <div id="schedulabilityStatus" class="status-box"></div>
+        <div id="executionLog" class="status-box"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
