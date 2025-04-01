@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OS Deadlock Simulator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>OS Deadlock Simulator</h1>
+    
+    <div class="tab">
+        <button class="tablinks active" id="defaultOpen" onclick="openTab(event, 'setup')">System Configuration</button>
+        <button class="tablinks" onclick="openTab(event, 'avoidance')">Deadlock Avoidance</button>
+        <button class="tablinks" onclick="openTab(event, 'detection')">Deadlock Detection</button>
+        <button class="tablinks" onclick="openTab(event, 'prevention')">Deadlock Prevention</button>
+    </div>
+    
+    <!-- System Configuration Tab -->
+    <div id="setup" class="tabcontent" style="display: block;">
+        <div class="container">
+            <div class="panel">
+                <h2>Resource Setup</h2>
+                <div>
+                    <label for="numResources">Number of Resource Types:</label>
+                    <input type="number" id="numResources" min="1" max="10" value="3">
+                    <button onclick="generateResourceInputs()">Generate</button>
+                </div>
+                <div id="resourceInstancesInputs"></div>
+                <button id="setupResourcesBtn">Confirm Resources</button>
+            </div>
+            
+            <div class="panel">
+                <h2>Process Setup</h2>
+                <div>
+                    <label for="numProcesses">Number of Processes:</label>
+                    <input type="number" id="numProcesses" min="1" max="10" value="4">
+                    <button onclick="generateProcessInputs()">Generate</button>
+                </div>
+                <div id="processMaxClaimInputs"></div>
+                <button id="setupProcessesBtn">Confirm Processes</button>
+            </div>
+        </div>
+        
+        <div class="panel">
+            <h2>Initial Allocation</h2>
+            <div id="allocationInputs"></div>
+            <button id="setupAllocationBtn">Set Allocation</button>
+        </div>
+        
+        <div class="panel">
+            <h2>System State Overview</h2>
+            <div class="container">
+                <div>
+                    <h3>Available Resources</h3>
+                    <div id="availableResources"></div>
+                </div>
+                <div>
+                    <h3>Resource Allocation Graph</h3>
+                    <canvas id="setupGraph" width="600" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Deadlock Avoidance Tab -->
+    <div id="avoidance" class="tabcontent">
+        <div class="panel">
+            <h2>Banker's Algorithm</h2>
+            <div class="container">
+                <div>
+                    <h3>System State</h3>
+                    <div>
+                        <h4>Allocation Matrix</h4>
+                        <div id="allocationTable"></div>
+                    </div>
+                    <div>
+                        <h4>Max Claim Matrix</h4>
+                        <div id="maxClaimTable"></div>
+                    </div>
+                    <div>
+                        <h4>Need Matrix</h4>
+                        <div id="needTable"></div>
+                    </div>
+                    <div>
+                        <h4>Available Resources</h4>
+                        <div id="availableTable"></div>
+                    </div>
+                </div>
+                <div>
+                    <h3>Safe State Checker</h3>
+                    <button id="checkSystemSafetyBtn">Check Safety</button>
+                    <div id="systemSafetyResult" class="result-box"></div>
+                    
+                    <h3>Resource Request Evaluation</h3>
+                    <div>
+                        <label for="bankerProcess">Process:</label>
+                        <select id="bankerProcess"></select>
+                    </div>
+                    <div id="bankerResourceInputs"></div>
+                    <button id="checkRequestSafetyBtn">Evaluate Request</button>
+                    <div id="requestSafetyResult" class="result-box"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Deadlock Detection Tab -->
+    <div id="detection" class="tabcontent">
+        <div class="panel">
+            <h2>Deadlock Detection</h2>
+            <div class="container">
+                <div>
+                    <h3>Current System State</h3>
+                    <div>
+                        <h4>Allocation Matrix</h4>
+                        <div id="detectionAllocationTable"></div>
+                    </div>
+                    <div>
+                        <h4>Request Matrix</h4>
+                        <div id="requestTable"></div>
+                    </div>
+                </div>
+                <div>
+                    <h3>Create Resource Request</h3>
+                    <div>
+                        <label for="requestProcess">Process:</label>
+                        <select id="requestProcess"></select>
+                    </div>
+                    <div id="requestResourceInputs"></div>
+                    <button id="addRequestBtn">Submit Request</button>
+                </div>
+            </div>
+            
+            <div>
+                <h3>Detect Deadlocks</h3>
+                <button id="detectDeadlockBtn">Run Detection</button>
+                <button onclick="simulateDeadlock()">Simulate Deadlock</button>
+                <div id="detectionResult" class="result-box"></div>
+            </div>
+            
+        </div>
+    </div>
+    
+    <!-- Deadlock Prevention Tab -->
+    <div id="prevention" class="tabcontent">
+        <div class="panel">
+            <h2>Deadlock Prevention (Circular Wait - Resource Ordering)</h2>
+            <div class="container">
+                <div>
+                    <h3>Resource Request Order</h3>
+                    <div id="resourceOrderingTable"></div>
+                    <p>Resources must be requested in increasing order of resource numbers.</p>
+                </div>
+                <div>
+                    <h3>Process Resource Management</h3>
+                    <div>
+                        <label for="preventionProcess">Process:</label>
+                        <select id="preventionProcess"></select>
+                    </div>
+                    <div>
+                        <label for="preventionResource">Resource:</label>
+                        <select id="preventionResource"></select>
+                    </div>
+                    <button id="requestOrderedResourceBtn">Request Resource</button>
+                    <button onclick="releaseResource()">Release Resource</button>
+                    <div id="preventionResult" class="result-box"></div>
+                </div>
+            </div>
+            
+            <div>
+                <h3>Current Process Allocations</h3>
+                <div id="processHoldingsTable"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
