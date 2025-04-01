@@ -1,10 +1,10 @@
-// System variables
-let resources = []; // Array of resource types {id: "R1", number: 1, instances: 4, available: 4}
-let processes = []; // Array of processes {id: "P1", maxClaim: {}, allocation: {}, need: {}}
-let requestMatrix = {}; // Process requests
-let processHoldings = {}; // For prevention - tracking resource holdings by order
 
-// UI helper functions
+let resources = []; 
+let processes = []; 
+let requestMatrix = {}; 
+let processHoldings = {};
+
+
 function openTab(evt, tabName) {
     let tabcontent = document.getElementsByClassName("tabcontent");
     for (let i = 0; i < tabcontent.length; i++) {
@@ -19,7 +19,7 @@ function openTab(evt, tabName) {
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
     
-    // Update relevant graphs for each tab - only draw graph for setup tab
+   
     if (tabName === "setup") {
         drawGraph("setupGraph");
     } else if (tabName === "avoidance") {
@@ -67,7 +67,7 @@ function generateProcessInputs() {
     for (let i = 1; i <= numProcesses; i++) {
         html += `<tr><td>P${i}</td>`;
         for (let j = 1; j <= numResources; j++) {
-            // Set reasonable max values based on resource instances
+           
             const maxInstance = document.getElementById(`resource${j}Instances`).value || 4;
             const defaultMax = Math.min(Math.floor(maxInstance * 0.7), 3); // Default to 70% of total or 3, whichever is smaller
             html += `<td><input type="number" id="p${i}r${j}max" min="0" max="${maxInstance}" value="${defaultMax}"></td>`;
@@ -116,7 +116,7 @@ function setupResources() {
         });
     }
     
-    // Update resource selection dropdowns
+   
     updateSelectOptions("preventionResource", resources.map(r => r.id));
     
     renderAvailableResources();
@@ -147,21 +147,21 @@ function setupProcesses() {
         processes.push(process);
     }
     
-    // Initialize process holdings for prevention
+   
     processHoldings = {};
     processes.forEach(process => {
         processHoldings[process.id] = [];
     });
     
-    // Update process selection dropdowns
+   
     updateSelectOptions("bankerProcess", processes.map(p => p.id));
     updateSelectOptions("requestProcess", processes.map(p => p.id));
     updateSelectOptions("preventionProcess", processes.map(p => p.id));
     
-    // Generate banker resource inputs
+    
     generateBankerResourceInputs();
     
-    // Generate request resource inputs
+    
     generateRequestResourceInputs();
     
     renderTables();
@@ -172,12 +172,12 @@ function setupAllocation() {
     const numProcesses = parseInt(document.getElementById("numProcesses").value);
     const numResources = parseInt(document.getElementById("numResources").value);
     
-    // Reset available resources first
+    
     resources.forEach(resource => {
         resource.available = resource.instances;
     });
     
-    // Update allocations and needs for each process
+    
     for (let i = 1; i <= numProcesses; i++) {
         const process = processes[i-1];
         
@@ -195,7 +195,7 @@ function setupAllocation() {
             process.allocation[resourceId] = alloc;
             process.need[resourceId] = max - alloc;
             
-            // Deduct from available resources
+            
             const resource = resources.find(r => r.id === resourceId);
             resource.available -= alloc;
             
@@ -207,10 +207,10 @@ function setupAllocation() {
         }
     }
     
-    // Initialize the prevention table
+   
     updateProcessHoldingsTable();
     
-    // Render all tables and graphs
+    
     renderTables();
     drawGraph("setupGraph");
 }
@@ -273,20 +273,20 @@ function renderAvailableResources() {
 }
 
 function renderTables() {
-    // Render all matrices for avoidance
+    
     renderMaxClaimTable();
     renderAllocationTable();
     renderNeedTable();
     renderAvailableTable();
     
-    // Render detection tables
+    
     renderDetectionAllocationTable();
     renderRequestTable();
     
-    // Render prevention tables
+    
     renderResourceOrderingTable();
     
-    // Update available resources display
+    
     renderAvailableResources();
 }
 
@@ -426,12 +426,12 @@ function updateProcessHoldingsTable() {
     
     let html = '<table><tr><th>Process</th><th>Resources Held (In Order)</th></tr>';
     processes.forEach(process => {
-        // Initialize process holdings if not already done
+        
         if (!processHoldings[process.id]) {
             processHoldings[process.id] = [];
         }
         
-        // Display resources held in order
+       
         html += `<tr><td>${process.id}</td><td>${processHoldings[process.id].join(', ') || 'None'}</td></tr>`;
     });
     html += '</table>';
@@ -462,18 +462,18 @@ function drawGraph(canvasId) {
     const startY = 50;
     const spacing = 80;
     
-    // Draw processes
+    
     processes.forEach((process, index) => {
         const y = startY + index * spacing;
         
-        // Draw process circle
+        
         ctx.beginPath();
         ctx.arc(processX, y, nodeRadius, 0, 2 * Math.PI);
         ctx.fillStyle = "#f0f0f0";
         ctx.fill();
         ctx.stroke();
         
-        // Draw process label
+        
         ctx.fillStyle = "#000";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
@@ -481,11 +481,11 @@ function drawGraph(canvasId) {
         ctx.fillText(process.id, processX, y);
     });
     
-    // Draw resources
+   
     resources.forEach((resource, index) => {
         const y = startY + index * spacing;
         
-        // Draw resource square
+        
         ctx.beginPath();
         ctx.rect(resourceX - nodeRadius, y - nodeRadius, nodeRadius * 2, nodeRadius * 2);
         ctx.fillStyle = "#f0f0f0";
@@ -502,7 +502,7 @@ function drawGraph(canvasId) {
         ctx.fillText(`Avail: ${resource.available}/${resource.instances}`, resourceX, y + 15);
     });
     
-    // Draw allocation edges (resource to process)
+    
     processes.forEach((process, pIndex) => {
         const processY = startY + pIndex * spacing;
         
@@ -520,22 +520,22 @@ function drawGraph(canvasId) {
 }
 
 function drawArrow(ctx, fromX, fromY, toX, toY, headLength = 10) {
-    // Calculate angle
+    
     const angle = Math.atan2(toY - fromY, toX - fromX);
     
-    // Draw main line
+    
     ctx.beginPath();
     ctx.moveTo(fromX, fromY);
     ctx.lineTo(toX, toY);
     ctx.stroke();
     
-    // Calculate arrowhead points
+    
     const arrowX1 = toX - headLength * Math.cos(angle - Math.PI / 6);
     const arrowY1 = toY - headLength * Math.sin(angle - Math.PI / 6);
     const arrowX2 = toX - headLength * Math.cos(angle + Math.PI / 6);
     const arrowY2 = toY - headLength * Math.sin(angle + Math.PI / 6);
     
-    // Draw arrowhead
+   
     ctx.beginPath();
     ctx.moveTo(toX, toY);
     ctx.lineTo(arrowX1, arrowY1);
@@ -545,9 +545,9 @@ function drawArrow(ctx, fromX, fromY, toX, toY, headLength = 10) {
     ctx.fill();
 }
 
-// Banker's Algorithm for Deadlock Avoidance
+
 function checkSystemSafety() {
-    // Check if the system state is safe
+   
     const safeResult = isSafeState(processes, resources);
     
     if (safeResult.safe) {
@@ -575,20 +575,20 @@ function checkRequestSafety() {
         return;
     }
     
-    // Get the requested resources
+    
     const request = {};
     let requestIsValid = true;
     resources.forEach(resource => {
         const requestAmount = parseInt(document.getElementById(`banker${resource.id}`).value) || 0;
         request[resource.id] = requestAmount;
         
-        // Check if request exceeds need
+        
         if (requestAmount > process.need[resource.id]) {
             alert(`Request for ${resource.id} (${requestAmount}) exceeds process need (${process.need[resource.id]})!`);
             requestIsValid = false;
         }
         
-        // Check if request exceeds available
+       
         if (requestAmount > resource.available) {
             alert(`Request for ${resource.id} (${requestAmount}) exceeds available (${resource.available})!`);
             requestIsValid = false;
@@ -600,14 +600,14 @@ function checkRequestSafety() {
         return;
     }
     
-    // Make a deep copy of the system state for simulation
+   
     const simulatedResources = JSON.parse(JSON.stringify(resources));
     const simulatedProcesses = JSON.parse(JSON.stringify(processes));
     
-    // Find the process in the simulated state
+   
     const simulatedProcess = simulatedProcesses.find(p => p.id === processId);
     
-    // Temporarily allocate resources
+   
     resources.forEach(resource => {
         const requestAmount = request[resource.id];
         const simResource = simulatedResources.find(r => r.id === resource.id);
@@ -617,7 +617,7 @@ function checkRequestSafety() {
         simulatedProcess.need[resource.id] -= requestAmount;
     });
     
-    // Check if the resulting state is safe
+    
     const safeResult = isSafeState(simulatedProcesses, simulatedResources);
     
     if (safeResult.safe) {
@@ -638,13 +638,13 @@ function checkRequestSafety() {
 }
 
 function isSafeState(simProcesses, simResources) {
-    // Make work array equal to available resources
+    
     const work = {};
     simResources.forEach(resource => {
         work[resource.id] = resource.available;
     });
     
-    // Initialize finish array
+    
     const finish = {};
     simProcesses.forEach(process => {
         finish[process.id] = false;
@@ -653,17 +653,17 @@ function isSafeState(simProcesses, simResources) {
     let safeSequence = [];
     let found = true;
     
-    // Continue until we can't find any eligible process
+    
     while (found) {
         found = false;
         
         for (let i = 0; i < simProcesses.length; i++) {
             const process = simProcesses[i];
             
-            // Skip finished processes
+            
             if (finish[process.id]) continue;
             
-            // Check if all needs can be satisfied
+        
             let canBeAllocated = true;
             
             for (const resourceId in process.need) {
@@ -674,7 +674,7 @@ function isSafeState(simProcesses, simResources) {
             }
             
             if (canBeAllocated) {
-                // This process can finish - add its resources back to work
+               
                 for (const resourceId in process.allocation) {
                     work[resourceId] += process.allocation[resourceId];
                 }
@@ -686,7 +686,7 @@ function isSafeState(simProcesses, simResources) {
         }
     }
     
-    // Check if all processes are marked as finished
+  
     const allFinished = Object.values(finish).every(f => f);
     
     return {
@@ -695,7 +695,7 @@ function isSafeState(simProcesses, simResources) {
     };
 }
 
-// Deadlock Detection Algorithm
+
 function addRequest() {
     const processId = document.getElementById("requestProcess").value;
     const process = processes.find(p => p.id === processId);
@@ -704,18 +704,17 @@ function addRequest() {
         return;
     }
     
-    // Initialize request matrix for this process if it doesn't exist
     if (!requestMatrix[processId]) {
         requestMatrix[processId] = {};
     }
     
-    // Get the requested resources
+  
     resources.forEach(resource => {
         const requestAmount = parseInt(document.getElementById(`req${resource.id}`).value) || 0;
         requestMatrix[processId][resource.id] = requestAmount;
     });
     
-    // Update tables
+   
     renderRequestTable();
     
     document.getElementById("detectionResult").innerHTML = `
@@ -726,16 +725,16 @@ function addRequest() {
 }
 
 function detectDeadlock() {
-    // Make work array equal to available resources
+   
     const work = {};
     resources.forEach(resource => {
         work[resource.id] = resource.available;
     });
     
-    // Initialize finish array based on allocation
+   
     const finish = {};
     processes.forEach(process => {
-        // A process with no allocation can finish
+      
         const hasAllocation = Object.values(process.allocation).some(a => a > 0);
         finish[process.id] = !hasAllocation;
     });
@@ -743,17 +742,17 @@ function detectDeadlock() {
     let found = true;
     let unfinishedCount = processes.length - Object.values(finish).filter(f => f).length;
     
-    // Continue until we can't find any eligible process
+
     while (found) {
         found = false;
         
         for (let i = 0; i < processes.length; i++) {
             const process = processes[i];
             
-            // Skip finished processes
+
             if (finish[process.id]) continue;
             
-            // Check if request can be satisfied
+
             let canBeAllocated = true;
             
             if (requestMatrix[process.id]) {
@@ -779,7 +778,7 @@ function detectDeadlock() {
         }
     }
     
-    // If there are unfinished processes, deadlock exists
+  
     if (unfinishedCount > 0) {
         // Get the deadlocked processes
         const deadlockedProcesses = processes
@@ -801,7 +800,7 @@ function detectDeadlock() {
     }
 }
 
-// Deadlock Prevention using Resource Ordering
+
 function requestOrderedResource() {
     const processId = document.getElementById("preventionProcess").value;
     const resourceId = document.getElementById("preventionResource").value;
@@ -814,7 +813,7 @@ function requestOrderedResource() {
         return;
     }
     
-    // Check if the process already holds resources with higher numbers
+ 
     const highestHeldResourceNumber = processHoldings[processId].length > 0 ?
         Math.max(...processHoldings[processId].map(rid => {
             const res = resources.find(r => r.id === rid);
@@ -832,7 +831,7 @@ function requestOrderedResource() {
         return;
     }
     
-    // Check if there are available instances
+
     if (resource.available <= 0) {
         document.getElementById("preventionResult").innerHTML = `
             <div class="error-result">
@@ -842,12 +841,12 @@ function requestOrderedResource() {
         return;
     }
     
-    // Grant the resource
+
     resource.available--;
     process.allocation[resourceId]++;
     process.need[resourceId]--;
     
-    // Add to process holdings
+
     processHoldings[processId].push(resourceId);
     
     document.getElementById("preventionResult").innerHTML = `
@@ -856,40 +855,40 @@ function requestOrderedResource() {
         </div>
     `;
     
-    // Update tables
+
     updateProcessHoldingsTable();
     renderTables();
 }
 
 function updateAvoidanceTab() {
-    // Update the system safety information
+
     checkSystemSafety();
 }
 
 function updateDetectionTab() {
-    // Reset result box when switching to detection tab
+
     document.getElementById("detectionResult").innerHTML = '';
 }
 
 function updatePreventionTab() {
-    // Reset result box when switching to prevention tab
+
     document.getElementById("preventionResult").innerHTML = '';
 }
 
-// Event listeners for window load
+
 window.onload = function() {
-    // Attach click handlers to tab buttons
+
     document.querySelectorAll('.tablinks').forEach(button => {
         button.addEventListener('click', function(event) {
             openTab(event, this.getAttribute('onclick').match(/'([^']+)'/)[1]);
         });
     });
     
-    // Set up initial resource and process inputs
+
     document.getElementById("numResources").addEventListener('change', generateResourceInputs);
     document.getElementById("numProcesses").addEventListener('change', generateProcessInputs);
     
-    // Set up button click handlers
+
     document.getElementById("setupResourcesBtn").addEventListener('click', setupResources);
     document.getElementById("setupProcessesBtn").addEventListener('click', setupProcesses);
     document.getElementById("setupAllocationBtn").addEventListener('click', setupAllocation);
@@ -899,10 +898,10 @@ window.onload = function() {
     document.getElementById("detectDeadlockBtn").addEventListener('click', detectDeadlock);
     document.getElementById("requestOrderedResourceBtn").addEventListener('click', requestOrderedResource);
     
-    // Default to setup tab
+
     document.getElementById("defaultOpen").click();
     
-    // Generate default resource inputs
+
     generateResourceInputs();
 };
 
@@ -943,12 +942,12 @@ function releaseResource() {
         `;
     }
     
-    // Release the resource
+
     resource.available++;
     process.allocation[resourceId]--;
     process.need[resourceId]++;
     
-    // Remove from process holdings
+  
     processHoldings[processId] = processHoldings[processId].filter(r => r !== resourceId);
     
     document.getElementById("preventionResult").innerHTML = `
@@ -957,27 +956,27 @@ function releaseResource() {
         </div>
     `;
     
-    // Update tables
+
     updateProcessHoldingsTable();
     renderTables();
 }
 
-// Add this function to reset the simulation
+
 function resetSimulation() {
-    // Reset resources and processes
+
     resources = [];
     processes = [];
     requestMatrix = {};
     processHoldings = {};
     
-    // Reset UI elements
+
     document.getElementById("numResources").value = 3;
     document.getElementById("numProcesses").value = 3;
     
-    // Generate default inputs
+
     generateResourceInputs();
     
-    // Clear tables and results
+
     document.getElementById("resourceInstancesInputs").innerHTML = '';
     document.getElementById("processMaxClaimInputs").innerHTML = '';
     document.getElementById("allocationInputs").innerHTML = '';
@@ -989,7 +988,7 @@ function resetSimulation() {
     document.getElementById("detectionResult").innerHTML = '';
     document.getElementById("preventionResult").innerHTML = '';
     
-    // Clear all tables
+
     document.getElementById("maxClaimTable").innerHTML = '';
     document.getElementById("allocationTable").innerHTML = '';
     document.getElementById("needTable").innerHTML = '';
@@ -998,19 +997,18 @@ function resetSimulation() {
     document.getElementById("requestTable").innerHTML = '';
     document.getElementById("resourceOrderingTable").innerHTML = '';
     document.getElementById("processHoldingsTable").innerHTML = '';
-    
-    // Clear graph
+
     const canvas = document.getElementById("setupGraph");
     if (canvas) {
         const ctx = canvas.getContext("2d");
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
     
-    // Reset to setup tab
+
     document.getElementById("defaultOpen").click();
 }
 
-// Add some educational content about deadlocks
+
 function showHelp() {
     const helpContent = `
         <div class="help-modal">
@@ -1055,7 +1053,3 @@ function closeHelp() {
     document.getElementById("helpModal").style.display = "none";
 }
 
-// Add to window.onload
-// document.getElementById("helpBtn").addEventListener('click', showHelp);
-// document.getElementById("closeHelpBtn").addEventListener('click', closeHelp);
-// document.getElementById("resetBtn").addEventListener('click', resetSimulation);
