@@ -13,7 +13,7 @@ body {
     flex-wrap: wrap;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 25px; /* Increased gap between flex items */
+    gap: 25px; 
 }
 
 .panel {
@@ -88,9 +88,9 @@ canvas {
     max-width: 100%;
 }
 
-/* Main heading styles with highlighting */
+
 h1 {
-    color: dark beige; /* Gold color for main title */
+    color: dark beige; 
     text-align: center;
     margin-bottom: 20px;
     margin-top: 25px;
@@ -98,69 +98,69 @@ h1 {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-/* Tab section headings */
+
 h2 {
-    color: #00BFFF; /* Deep sky blue for section titles */
+    color: #00BFFF; 
     text-align: center;
     margin-bottom: 15px;
     margin-top: 25px;
     font-size: 24px;
 }
 
-/* Subsection headings */
+
 h3 {
-    color: #32CD32; /* Lime green for subsection titles */
+    color: #32CD32;
     text-align: center;
     margin-bottom: 15px;
     margin-top: 25px;
     font-size: 20px;
 }
 
-/* Minor headings */
+
 h4, h5, h6 {
-    color: #FF8C00; /* Dark orange for minor headings */
+    color: #FF8C00; 
     text-align: center;
     margin-bottom: 15px;
     margin-top: 20px;
 }
 
-/* First heading in a section should have less top margin */
+
 .panel > h2:first-child,
 .panel > h3:first-child {
     margin-top: 10px;
 }
 
 .panel h1, .panel h2, .panel h3, .panel h4, .panel h5, .panel h6 {
-    color: inherit; /* Preserve our new heading colors in panels */
+    color: inherit; 
 }
 
-/* Status indicators with better highlighting */
+
 .status-safe {
-    color: #008000; /* Darker green */
+    color: #008000;
     font-weight: bold;
-    background-color: #CCFFCC; /* Light green background */
+    background-color: #CCFFCC; 
     padding: 3px 6px;
     border-radius: 3px;
 }
 
 .status-unsafe {
-    color: #FF0000; /* Bright red */
+    color: #FF0000; 
     font-weight: bold;
-    background-color: #FFCCCC; /* Light red background */
+    background-color: #FFCCCC; 
     padding: 3px 6px;
     border-radius: 3px;
 }
 
-/* Highlight for safe sequence */
+
 .safe-sequence {
-    color: #0000CD; /* Medium blue */
+    color: #0000CD; 
     font-weight: bold;
 }
 
-/* Highlight for process names in tables */
+
 table td:first-child {
     font-weight: bold;
-    background-color: #e0cda9; /* Same as headers */
+    background-color: #e0cda9;
 }
 
 .result-box {
@@ -168,15 +168,15 @@ table td:first-child {
     margin-top: 20px;
     margin-bottom: 20px;
     border-radius: 4px;
-    background-color: #FFFACD; /* Light yellow background for result boxes */
+    background-color: #FFFACD; 
     min-height: 40px;
-    border: 1.5px solid #DAA520; /* Golden border */
+    border: 1.5px solid #DAA520; 
     color: black;
 }
 
-/* Highlight text in result boxes */
+
 .result-box strong {
-    color: #8B0000; /* Dark red */
+    color: #8B0000; 
 }
 
 .tab {
@@ -202,7 +202,7 @@ table td:first-child {
 }
 
 .tab button.active {
-    background-color: #006400; /* Darker green for active tab */
+    background-color: #006400; 
     color: white;
 }
 
@@ -217,18 +217,18 @@ table td:first-child {
     color: black;
 }
 
-/* Important labels with highlighting */
+
 label {
     font-weight: bold;
 }
 
-/* Highlight important form sections */
+
 label[for="numResources"],
 label[for="numProcesses"],
 label[for="bankerProcess"],
 label[for="requestProcess"],
 label[for="preventionProcess"] {
-    color: black;/* Purple for important labels */
+    color: black;
 }
 
 @keyframes fadeEffect {
@@ -236,7 +236,7 @@ label[for="preventionProcess"] {
     to { opacity: 1; }
 }
 
-/* Responsive Design */
+
 @media screen and (max-width: 768px) {
     .container {
         flex-direction: column;
@@ -256,7 +256,7 @@ label[for="preventionProcess"] {
     }
 }
 
-/* Improved spacing between sections */
+
 .container > div {
     margin-bottom: 30px;
 }
@@ -274,7 +274,7 @@ label[for="preventionProcess"] {
     margin-top: 20px;
 }
 
-/* Add more space between the tables and the next section */
+
 #allocationTable + div,
 #maxClaimTable + div,
 #needTable + div,
@@ -282,36 +282,36 @@ label[for="preventionProcess"] {
     margin-top: 30px;
 }
 
-/* Add more space for the "Safe State Checker" section */
+
 h3 + button,
 h3 + div > button {
     margin-top: 15px;
 }
 
-/* Ensure spacing inside the detection and prevention sections */
+
 #detection .container > div,
 #prevention .container > div {
     margin-bottom: 30px;
 }
 
-/* Add space between label and input/select in resource request form */
+
 label + select,
 label + input {
     margin-left: 10px;
 }
 
-/* Add spacing between form elements */
+
 div > label:first-child {
     margin-top: 15px;
     display: inline-block;
 }
 
-/* Add spacing above section headers */
+
 .container h3 {
     margin-top: 30px;
 }
 
-/* Add spacing between the Max Claim Matrix and Need Matrix */
+
 #maxClaimTable + h4,
 #needTable + h4 {
     margin-top: 30px;
