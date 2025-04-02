@@ -1,0 +1,253 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+h2 {
+    margin-bottom: 15px;
+    color: #444;
+}
+
+.setup-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+label {
+    font-weight: bold;
+    min-width: 150px;
+}
+
+select, input, button {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #3e8e41;
+}
+
+.hidden {
+    display: none;
+}
+
+.algorithm-description-container {
+    padding: 8px 15px;
+    background-color: #e8f5e9;
+    border-radius: 4px;
+    font-style: italic;
+    color: #2e7d32;
+}
+
+.info-text {
+    font-size: 14px;
+    color: #666;
+    font-style: italic;
+}
+
+.status-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #eaf7ea;
+    border-radius: 6px;
+}
+
+.status-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.status-item span:first-child {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#page-faults, #access-status {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.memory-section {
+    margin-bottom: 20px;
+}
+
+#frames-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.frame {
+    width: 80px;
+    height: 80px;
+    border: 2px solid #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    position: relative;
+}
+
+.frame:after {
+    content: attr(data-info);
+    position: absolute;
+    bottom: -20px;
+    font-size: 12px;
+    color: #666;
+}
+
+.frame.empty {
+    color: #999;
+    border-style: dashed;
+}
+
+.frame.highlight {
+    background-color: #ffeb3b;
+    animation: highlight 1s ease-in-out;
+}
+
+.frame.replaced {
+    background-color: #ff9800;
+    animation: replaced 1s ease-in-out;
+}
+
+@keyframes highlight {
+    0% { background-color: #4CAF50; }
+    100% { background-color: #ffeb3b; }
+}
+
+@keyframes replaced {
+    0% { background-color: #f44336; }
+    100% { background-color: #ff9800; }
+}
+
+.input-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.history-section {
+    margin-bottom: 20px;
+}
+
+#history-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.history-item {
+    padding: 8px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.history-hit {
+    background-color: #c8e6c9;
+    color: #2e7d32;
+}
+
+.history-miss {
+    background-color: #ffcdd2;
+    color: #c62828;
+}
+
+.optimal-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #e3f2fd;
+    border-radius: 6px;
+}
+
+#optimal-sequence-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.sequence-item {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #2196f3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    border-radius: 4px;
+    background-color: #e3f2fd;
+}
+
+.sequence-item.current {
+    background-color: #2196f3;
+    color: white;
+    border: 2px solid #0d47a1;
+}
+
+.sequence-item.processed {
+    background-color: #bbdefb;
+    color: #666;
+    border-style: dashed;
+}
+
+#reset {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #f44336;
+    margin-top: 20px;
+}
+
+#reset:hover {
+    background-color: #d32f2f;
+}

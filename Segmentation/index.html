@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Segmentation Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>OS Memory Segmentation Simulator</h1>
+    </header>
+    
+    <main>
+        <div class="container">
+            <div class="left-panel">
+                <div class="control-panel">
+                    <h2>Add Segment</h2>
+                    <div class="form-group">
+                        <label for="segmentName">Segment Name:</label>
+                        <input type="text" id="segmentName" placeholder="e.g., Code, Data, Stack">
+                    </div>
+                    <div class="form-group">
+                        <label for="segmentSize">Size (KB):</label>
+                        <input type="number" id="segmentSize" min="1" max="100" value="10">
+                    </div>
+                    <button id="addSegmentBtn">Add Segment</button>
+                    <button id="resetMemoryBtn">Reset Memory</button>
+                </div>
+                
+                <div class="segment-table-container">
+                    <h2>Segmentation Table</h2>
+                    <table id="segmentTable">
+                        <thead>
+                            <tr>
+                                <th>Segment</th>
+                                <th>Base</th>
+                                <th>Limit</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="segmentTableBody">
+                            <!-- Segment entries will be added here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="right-panel">
+                <div class="memory-container">
+                    <h2>Main Memory</h2>
+                    <div class="memory-block-container">
+                        <div class="memory-info">
+                            <span>Memory Size: <span id="totalMemory">256</span> KB</span>
+                            <span>Used: <span id="usedMemory">0</span> KB</span>
+                            <span>Free: <span id="freeMemory">256</span> KB</span>
+                        </div>
+                        <div id="memoryVisualizer" class="memory-block">
+                            <!-- Memory blocks will be added here dynamically -->
+                        </div>
+                        <div class="memory-scale">
+                            <span>0 KB</span>
+                            <span>128 KB</span>
+                            <span>256 KB</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-panel">
+                    <h2>Memory Access Simulation</h2>
+                    <div class="form-group">
+                        <label for="accessSegment">Segment:</label>
+                        <select id="accessSegment">
+                            <option value="">Select a segment</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="accessOffset">Offset (KB):</label>
+                        <input type="number" id="accessOffset" min="0" value="0">
+                    </div>
+                    <button id="accessMemoryBtn">Access Memory</button>
+                    <div id="accessResult" class="access-result">
+                        <!-- Access result will be displayed here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>OS Memory Segmentation Simulator</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
