@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Management Simulation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Memory Management Techniques Simulation</h1>
+        
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab('mft-tab')">MFT</button>
+            <button class="tab-button" onclick="openTab('mvt-tab')">MVT</button>
+        </div>
+        
+        <!-- MFT Tab -->
+        <div id="mft-tab" class="tab-content active">
+            <div class="description">
+                <h2>MFT (Multiprogramming with a Fixed number of Tasks)</h2>
+                <p>A memory management technique where memory is divided into fixed-size partitions. Each job is assigned to a partition, and the memory assigned to a partition does not change. MFT suffers from internal fragmentation.</p>
+            </div>
+            
+            <div class="input-section">
+                <div class="input-group">
+                    <label for="mft-total-memory">Total Memory Available (Bytes):</label>
+                    <input type="number" id="mft-total-memory" min="1">
+                </div>
+                <div class="input-group">
+                    <label for="mft-block-size">Block Size (Bytes):</label>
+                    <input type="number" id="mft-block-size" min="1">
+                </div>
+                <div class="input-group">
+                    <label for="mft-num-processes">Number of Processes:</label>
+                    <input type="number" id="mft-num-processes" min="1">
+                </div>
+                <button id="mft-init-btn">Initialize</button>
+            </div>
+            
+            <div id="mft-process-inputs" class="process-inputs hidden">
+                <!-- Process input fields will be added here dynamically -->
+            </div>
+            
+            <button id="mft-calculate-btn" class="hidden">Calculate</button>
+            
+            <div id="mft-results" class="results hidden">
+                <h3>Results:</h3>
+                <p id="mft-num-blocks"></p>
+                <table id="mft-results-table">
+                    <thead>
+                        <tr>
+                            <th>Process</th>
+                            <th>Memory Required</th>
+                            <th>Allocated</th>
+                            <th>Internal Fragmentation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Results will be added here -->
+                    </tbody>
+                </table>
+                <div class="summary">
+                    <p id="mft-memory-full" class="hidden">Memory is Full, Remaining Processes cannot be accommodated</p>
+                    <p id="mft-internal-frag"></p>
+                    <p id="mft-external-frag"></p>
+                </div>
+                <button id="mft-reset-btn" class="reset-btn">Reset Simulation</button>
+            </div>
+        </div>
+        
+        <!-- MVT Tab -->
+        <div id="mvt-tab" class="tab-content">
+            <div class="description">
+                <h2>MVT (Multiprogramming with a Variable number of Tasks)</h2>
+                <p>A memory management technique where each job gets just the amount of memory it needs. The partitioning of memory is dynamic and changes as jobs enter and leave the system. MVT is a more efficient user of resources but suffers from external fragmentation.</p>
+            </div>
+            
+            <div class="input-section">
+                <div class="input-group">
+                    <label for="mvt-total-memory">Total Memory Available (Bytes):</label>
+                    <input type="number" id="mvt-total-memory" min="1">
+                </div>
+                <button id="mvt-init-btn">Initialize</button>
+            </div>
+            
+            <div id="mvt-process-section" class="hidden">
+                <div class="input-group">
+                    <label for="mvt-current-process">Memory Required for Process <span id="mvt-process-number">1</span> (Bytes):</label>
+                    <input type="number" id="mvt-process-memory" min="1">
+                </div>
+                <button id="mvt-allocate-btn">Allocate Memory</button>
+            </div>
+            
+            <div id="mvt-results" class="results hidden">
+                <h3>Results:</h3>
+                <p id="mvt-memory-status"></p>
+                <p id="mvt-total-memory-display"></p>
+                <table id="mvt-results-table">
+                    <thead>
+                        <tr>
+                            <th>Process</th>
+                            <th>Memory Allocated</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Results will be added here -->
+                    </tbody>
+                </table>
+                <div class="summary">
+                    <p id="mvt-total-allocated"></p>
+                    <p id="mvt-external-frag"></p>
+                </div>
+                <div id="mvt-continue-section">
+                    <p>Do you want to continue? 
+                        <button id="mvt-continue-yes">Yes</button>
+                        <button id="mvt-continue-no">No</button>
+                    </p>
+                </div>
+                <button id="mvt-reset-btn" class="reset-btn hidden">Reset Simulation</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
