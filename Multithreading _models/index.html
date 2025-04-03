@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multithreading Models Emulator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Multithreading Models Emulator</h1>
+        <div class="controls">
+            <div class="control-group">
+                <label for="model-select">Select Threading Model:</label>
+                <select id="model-select">
+                    <option value="one-to-one">One-to-One Model</option>
+                    <option value="one-to-many">One-to-Many Model (Many User Threads to One Kernel Thread)</option>
+                    <option value="many-to-many">Many-to-Many Model</option>
+                    <option value="many-to-one">Many-to-One Model</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="thread-count">Number of Threads:</label>
+                <input type="range" id="thread-count" min="1" max="10" value="4">
+                <span id="thread-count-value">4</span>
+            </div>
+            <div class="control-group">
+                <label for="task-complexity">Task Complexity:</label>
+                <input type="range" id="task-complexity" min="1" max="10" value="5">
+                <span id="task-complexity-value">5</span>
+            </div>
+            <button id="start-btn">Start Simulation</button>
+            <button id="stop-btn" disabled>Stop Simulation</button>
+        </div>
+
+        <div class="simulation-area">
+            <div class="model-info">
+                <h2 id="current-model">One-to-One Model</h2>
+                <p id="model-description">In this model, each user thread is mapped to a corresponding kernel thread.</p>
+            </div>
+            
+            <div class="emulation-container">
+                <div class="threads-container">
+                    <div class="user-threads">
+                        <h3>User Threads</h3>
+                        <div id="user-threads-display" class="thread-display"></div>
+                    </div>
+                    <div class="kernel-threads">
+                        <h3>Kernel Threads</h3>
+                        <div id="kernel-threads-display" class="thread-display"></div>
+                    </div>
+                </div>
+                <div class="cpu-container">
+                    <h3>CPU Cores</h3>
+                    <div id="cpu-cores-display" class="cpu-display"></div>
+                </div>
+            </div>
+
+            <div class="metrics">
+                <div class="metric">
+                    <span>Throughput:</span>
+                    <span id="throughput">0 tasks/sec</span>
+                </div>
+                <div class="metric">
+                    <span>Average Latency:</span>
+                    <span id="latency">0 ms</span>
+                </div>
+                <div class="metric">
+                    <span>CPU Utilization:</span>
+                    <span id="utilization">0%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="explanation">
+            <h2>Multithreading Models Explained</h2>
+            <div class="model-explanation">
+                <h3>One-to-One Model</h3>
+                <p>Maps each user thread to a kernel thread. Provides more concurrency and takes advantage of multiple processors. However, creating a kernel thread for each user thread can burden the system if the application creates too many threads.</p>
+            </div>
+            <div class="model-explanation">
+                <h3>Many-to-One Model</h3>
+                <p>Maps many user-level threads to a single kernel thread. Thread management is done in user space, so it's efficient, but the entire process will block if a thread makes a blocking system call. Also, it cannot take advantage of multiple processors.</p>
+            </div>
+            <div class="model-explanation">
+                <h3>One-to-Many Model</h3>
+                <p>Maps many user-level threads to a smaller number of kernel threads. Allows the developer to create as many user threads as necessary while the kernel threads can run in parallel on multiple processors.</p>
+            </div>
+            <div class="model-explanation">
+                <h3>Many-to-Many Model</h3>
+                <p>Multiplexes many user-level threads to a smaller or equal number of kernel threads. This model provides the best of both worlds: it allows for creating as many user threads as necessary while providing true parallelism by distributing them over multiple processors.</p>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
