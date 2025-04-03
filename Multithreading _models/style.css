@@ -1,0 +1,239 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2c3e50;
+}
+
+h2 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+h3 {
+    color: #34495e;
+    margin-bottom: 10px;
+}
+
+.controls {
+    background-color: #ecf0f1;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 200px;
+}
+
+label {
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+select, input {
+    padding: 8px;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+}
+
+input[type="range"] {
+    width: 100%;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+button:disabled {
+    background-color: #95a5a6;
+    cursor: not-allowed;
+}
+
+.simulation-area {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.model-info {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.emulation-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.threads-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.user-threads, .kernel-threads {
+    flex: 1;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding:15px;
+}
+
+.thread-display, .cpu-display {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.thread, .cpu-core {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    position: relative;
+}
+
+.user-thread {
+    background-color: #3498db;
+}
+
+.kernel-thread {
+    background-color: #e74c3c;
+}
+
+.cpu-core {
+    background-color: #2ecc71;
+    width: 100px;
+    height: 100px;
+}
+
+.thread-idle {
+    opacity: 0.5;
+}
+
+.thread-active {
+    opacity: 1;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(52, 152, 219, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
+    }
+}
+
+.thread-task {
+    position: absolute;
+    bottom: -10px;
+    font-size: 12px;
+    color: #333;
+    background-color: #f1c40f;
+    padding: 2px 6px;
+    border-radius: 10px;
+}
+
+.metrics {
+    display: flex;
+    justify-content: space-around;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 20px;
+}
+
+.metric {
+    text-align: center;
+}
+
+.metric span:first-child {
+    font-weight: 600;
+    margin-right: 5px;
+}
+
+.explanation {
+    margin-top: 40px;
+}
+
+.model-explanation {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.thread-connection {
+    position: absolute;
+    background-color: #95a5a6;
+    height: 2px;
+    z-index: -1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .threads-container {
+        flex-direction: column;
+    }
+    
+    .metrics {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .control-group {
+        min-width: 100%;
+    }
+}
