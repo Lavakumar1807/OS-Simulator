@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Calls</title>
+    <link href="./css/output.css" rel="stylesheet" >
+    <link href="./css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="grid bg-black text-white h-32 text-center align-text-bottom place-items-center"><strong>System calls</strong></div>
+
+<div class="out-container">
+    <div class="text-container">
+        
+        <span class="paragraph-container">
+            <strong>System Calls</strong>
+           
+                <br>
+                <p class="mx-10">At a high level, a system call is a mechanism by which a program requests 
+                    a service from the operating system's kernel. These services are typically
+                     related to hardware management, process control, file handling, memory 
+                     allocation, or communication between processes.
+                    System calls are executed in privileged mode (kernel mode),
+                     ensuring that the operating system can control and monitor how user programs 
+                     access system resources. The user program itself runs in user mode, which
+                      has restricted access to resources. This separation between user mode
+                       and kernel mode helps maintain system stability and security.<br>
+                    </p>
+        </span>
+        <br>
+        </div>
+        <div class="h-10"></div>
+        <div class ="text-container">
+        <span class="paragraph-container">
+            <br>
+            <strong><br>Types of System Calls</strong>
+            <p>
+                <strong>1 Process Control:</strong> These system calls manage processes, such as creating, terminating, or suspending processes.
+                <br>                
+                         
+        </p>
+        </span>
+    </div>
+
+        <div class="text-container">
+            <span class="paragraph-container">
+                <br>
+                <strong><br>CreateProcess</strong>
+            </span>
+
+        </div>
+    <div id="CreateProcess" class="text-container" >
+        <textarea  class="auto-resize-textarea" placeholder="Write your code here"  id="input"></textarea>
+    </div>
+    <button class="bg-black text-white rounded w-32 justify-center" id="run">Run</button>
+    <div id="CreateProcessOutput" class="text-container">
+        <textarea class="auto-resize-textarea" placeholder="output" id="output"></textarea>
+    </div>
+
+    <div class="text-container">
+        <span class="paragraph-container">
+            <br>
+            <strong>2 File Management: </strong>These system calls allow programs to interact with files—creating, deleting, reading, writing, and modifying files.
+                <br>      
+        </span>
+    </div>
+       <div class="text-container">
+            <span class="paragraph-container">
+                <br>
+                <strong><br>FileHandling</strong>
+            </span>
+
+        </div>
+    <div id="FileHandling" class="text-container" >
+        <textarea  class="auto-resize-textarea" placeholder="Write your code here"  id="FileHandlingInput"></textarea>
+    </div>
+    <button class="bg-black text-white rounded w-32 justify-center" id="FileHandlingRun">Run</button>
+    <div id="FileHandlingOutputContainer" class="text-container">
+        <textarea class="auto-resize-textarea" placeholder="output" id="FileHandlingOutput"></textarea>
+    </div>
+
+    <div class="text-container">
+        <span class="paragraph-container">
+            <br>
+            <strong><br>FileHandleRead</strong>
+        </span>
+    
+    </div>
+    <div id="FileHandleRead" class="text-container" >
+    <textarea  class="auto-resize-textarea" placeholder="Write your code here"  id="FileHandleReadInput"></textarea>
+    </div>
+    <button class="bg-black text-white rounded w-32 justify-center" id="FileHandleReadRun">Run</button>
+    <div id="FileHandleReadOutputContainer" class="text-container">
+    <textarea class="auto-resize-textarea" placeholder="output" id="FileHandleReadOutput"></textarea>
+    </div>
+    
+    <div class="text-container">
+        <span class="paragraph-container">
+            <br>
+            <strong>3 MemoryAllocation: </strong>These system calls ensures that programs and processes receive the required memory while maintaining system stability, security, and efficiency.
+                <br>      
+        </span>
+    </div>
+    <div class="text-container">
+        <span class="paragraph-container">
+            <br>
+            <strong><br>MemoryAllocation</strong>
+        </span>
+
+    </div>
+
+    
+<div id="MemoryAllocation" class="text-container" >
+    <textarea  class="auto-resize-textarea" placeholder="Write your code here"  id="MemoryAllocationInput"></textarea>
+</div>
+<button class="bg-black text-white rounded w-32 justify-center" id="MemoryAllocationRun">Run</button>
+<div id="MemoryAllocationOutputContainer" class="text-container">
+    <textarea class="auto-resize-textarea" placeholder="output" id="MemoryAllocationOutput"></textarea>
+</div>
+
+    
+<div class="text-container">
+    <span class="paragraph-container">
+        <br>
+        <strong><br>MemoryExpansion</strong>
+    </span>
+
+</div>
+
+
+<div id="MemoryExpansion" class="text-container" >
+<textarea  class="auto-resize-textarea" placeholder="Write your code here"  id="MemoryExpansionInput"></textarea>
+</div>
+<button class="bg-black text-white rounded w-32 justify-center" id="MemoryExpansionRun">Run</button>
+<div id="MemoryExpansionOutputContainer" class="text-container">
+<textarea class="auto-resize-textarea" placeholder="output" id="MemoryExpansionOutput"></textarea>
+</div>
+
+
+<div class="text-container">
+    <span class="paragraph-container">
+        <br>
+        <strong>4 Inter-Process Communication: </strong>These system calls facilitate inter-process communication (IPC), enabling processes to share data.
+                <br>       
+    </span>
+</div>
+
+
+<div class="text-container">
+    <span class="paragraph-container">
+        <br>
+        <strong><br>FileMemoryMapping</strong>
+    </span>
+
+</div>
+<div id="FileMemoryMapping" class="text-container" >
+<textarea  class="auto-resize-textarea" placeholder="Write your code here"  id="FileMemoryMappingInput"></textarea>
+</div>
+<button class="bg-black text-white rounded w-32 justify-center" id="FileMemoryMappingRun">Run</button>
+<div id="FileMemoryMappingOutputContainer" class="text-container">
+<textarea class="auto-resize-textarea" placeholder="output" id="FileMemoryMappingOutput"></textarea>
+</div>
+
+
+<div class="text-container">
+    <span class="paragraph-container">
+        <br>
+        <strong><br>MemoryMappedRead</strong>
+    </span>
+
+</div>
+<div id="MemoryMappedRead" class="text-container" >
+<textarea  class="auto-resize-textarea" placeholder="Write your code here"  id="MemoryMappedReadInput"></textarea>
+</div>
+<button class="bg-black text-white rounded w-32 justify-center" id="MemoryMappedReadRun">Run</button>
+<div id="MemoryMappedReadOutputContainer" class="text-container">
+<textarea class="auto-resize-textarea" placeholder="output" id="MemoryMappedReadOutput"></textarea>
+</div>
+
+
+<div class="text-container">
+    <span class="paragraph-container">
+        <br>
+        <strong><br>Pipe</strong>
+    </span>
+
+</div>
+<div id="Pipe" class="text-container" >
+<textarea  class="auto-resize-textarea" placeholder="Write your code here"  id="PipeInput"></textarea>
+</div>
+<button class="bg-black text-white rounded w-32 justify-center" id="PipeRun">Run</button>
+<div id="PipeOutputContainer" class="text-container">
+<textarea class="auto-resize-textarea" placeholder="output" id="PipeOutput"></textarea>
+</div>
+
+
+<div class="text-container">
+    <span class="paragraph-container">
+        <br>
+        <strong><br>PipeRead</strong>
+    </span>
+
+</div>
+<div id="PipeRead" class="text-container" >
+<textarea  class="auto-resize-textarea" placeholder="Write your code here"  id="PipeReadInput"></textarea>
+</div>
+<button class="bg-black text-white rounded w-32 justify-center" id="PipeReadRun">Run</button>
+<div id="PipeReadOutputContainer" class="text-container">
+<textarea class="auto-resize-textarea" placeholder="output" id="PipeReadOutput"></textarea>
+</div>
+
+
+
+</div>
+    <script src="functioncalls.js"></script>
+</body>
+</html>
