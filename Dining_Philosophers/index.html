@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dining Philosophers Problem with Monitor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Dining Philosophers Problem with Monitor</h1>
+        
+        <div class="status" id="status">Press Start to begin simulation</div>
+        
+        <div class="table-container">
+            <div class="table"></div>
+            <!-- Philosophers and forks will be added here dynamically -->
+        </div>
+        
+        <div class="controls">
+            <div class="speed-control">
+                <label for="speed">Simulation Speed:</label>
+                <select id="speed">
+                    <option value="2000">Slow</option>
+                    <option value="1000" selected>Normal</option>
+                    <option value="500">Fast</option>
+                    <option value="200">Very Fast</option>
+                </select>
+            </div>
+            
+            <div class="buttons">
+                <button id="start-btn">Start</button>
+                <button id="stop-btn" disabled>Stop</button>
+                <button id="reset-btn">Reset</button>
+            </div>
+        </div>
+        
+        <div class="monitor-state">
+            <div class="state-title">Monitor State</div>
+            <table class="state-table">
+                <thead>
+                    <tr>
+                        <th>Philosopher</th>
+                        <th>State</th>
+                        <th>Left Fork</th>
+                        <th>Right Fork</th>
+                    </tr>
+                </thead>
+                <tbody id="state-body">
+                    <!-- State will be added here dynamically -->
+                </tbody>
+            </table>
+            <div class="critical-section" id="critical-section">
+                No philosopher in critical section
+            </div>
+        </div>
+        
+        <div class="log" id="log"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
