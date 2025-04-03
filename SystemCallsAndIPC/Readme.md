@@ -5,3 +5,6 @@ npm init -y
 npm i fs 
 
 
+npm i tailwindcss@3 -D
+
+npx tailwindcss -i ./views/css/input.css -o ./views/css/output.css --watch
