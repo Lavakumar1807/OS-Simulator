@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Allocation Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Contiguous Memory Allocation Simulator</h1>
+        
+        <div class="card" id="input-card">
+            <h2>Memory Allocation Setup</h2>
+            
+            <div id="block-input">
+                <h3>Memory Block Configuration</h3>
+                <div class="input-group">
+                    <label for="num-blocks">Number of Memory Blocks:</label>
+                    <input type="number" id="num-blocks" min="1" value="3">
+                    <button id="set-blocks">Set Blocks</button>
+                    <button id="reset-btn">Reset All</button>
+                </div>
+                
+                <div id="block-sizes-container" class="hidden">
+                    <h4>Enter Block Sizes (in KB):</h4>
+                    <div id="block-sizes-inputs"></div>
+                    <button id="confirm-blocks">Confirm Blocks</button>
+                </div>
+            </div>
+            
+            <div id="process-input" class="hidden">
+                <h3>Process Configuration</h3>
+                <div class="input-group">
+                    <label for="num-processes">Number of Processes:</label>
+                    <input type="number" id="num-processes" min="1" value="4">
+                    <button id="set-processes">Set Processes</button>
+                </div>
+                
+                <div id="process-sizes-container" class="hidden">
+                    <h4>Enter Process Sizes (in KB):</h4>
+                    <div id="process-sizes-inputs"></div>
+                    <button id="confirm-processes">Confirm Processes</button>
+                </div>
+            </div>
+            
+            <div id="allocation-method" class="hidden">
+                <h3>Select Allocation Method</h3>
+                <div class="method-selector">
+                    <button class="method-btn" data-method="first-fit">First Fit</button>
+                    <button class="method-btn" data-method="best-fit">Best Fit</button>
+                    <button class="method-btn" data-method="worst-fit">Worst Fit</button>
+                    <button class="method-btn" data-method="next-fit">Next Fit</button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="results-card" class="card hidden">
+            <h2>Allocation Results</h2>
+            <div class="method-info">
+                <h3 id="method-title">Method: <span id="used-method"></span></h3>
+                <div>
+                    <button id="back-btn">Back to Setup</button>
+                    <button id="reset-btn">Reset All</button>
+                </div>
+            </div>
+            
+            <!-- Method description will be shown here after selection -->
+            <div id="selected-method-description" class="method-description"></div>
+            
+            <div class="result-container">
+                <div class="memory-visualization">
+                    <h3>Memory Blocks Visualization</h3>
+                    <div id="memory-blocks"></div>
+                </div>
+                
+                <div class="allocation-details">
+                    <h3>Allocation Details</h3>
+                    <div id="allocation-table-container">
+                        <table id="allocation-table">
+                            <thead>
+                                <tr>
+                                    <th>Process</th>
+                                    <th>Size (KB)</th>
+                                    <th>Block Allocated</th>
+                                    <th>Internal Fragmentation</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="allocation-results">
+                                <!-- Results will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="summary">
+                <h3>Allocation Summary</h3>
+                <div id="allocation-summary"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
