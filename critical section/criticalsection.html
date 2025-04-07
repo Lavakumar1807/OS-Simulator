@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Critical Section Problem Simulator</title>
+    <link rel="stylesheet" href="criticalsection.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Critical Section Problem Simulator</h1>
+        
+        <div class="description">
+            <p>This simulator demonstrates various algorithms for solving the critical section problem in concurrent programming. It visualizes how processes are scheduled to enter and exit the critical section, adhering to mutual exclusion, progress, and bounded waiting requirements.</p>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab active" onclick="showTab('simulation')">Simulation</div>
+            <div class="tab" onclick="showTab('theory')">Theory</div>
+        </div>
+        
+        <div class="tab-content">
+            <div id="simulation-tab" class="tab-pane active">
+                <div class="controls">
+                    <div>
+                        <label for="algorithm">Algorithm:</label>
+                        <select id="algorithm" onchange="changeAlgorithm()">
+                            <option value="petersons">Peterson's Algorithm</option>
+                            <option value="testAndSet">Test-and-Set</option>
+                            <option value="semaphore">Binary Semaphore</option>
+                            <option value="mutex">Mutex</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="numProcesses">Processes:</label>
+                        <select id="numProcesses" onchange="updateProcessCount()">
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="speed">Speed:</label>
+                        <input type="range" id="speed" min="1" max="10" value="5" onchange="updateSpeed()">
+                        <span id="speedDisplay" class="speed-display">Medium</span>
+                    </div>
+                    <button id="startButton" onclick="startSimulation()">Start</button>
+                    <button id="pauseButton" onclick="pauseSimulation()" disabled>Pause</button>
+                    <button id="resetButton" onclick="resetSimulation()">Reset</button>
+                </div>
+                
+                <div class="panel">
+                    <h3>Algorithm Description</h3>
+                    <div id="algorithm-description">
+                        <p><strong>Peterson's Algorithm</strong> is a solution to the critical section problem for two processes. It uses two variables: a boolean array <code>flag</code> where <code>flag[i]</code> indicates if process i wants to enter the critical section, and a variable <code>turn</code> that indicates which process has priority if both want to enter.</p>
+                    </div>
+                </div>
+                
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="stat-label">Mutual Exclusion Violations</div>
+                        <div id="mutex-violations" class="stat-value">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Average Wait Time</div>
+                        <div id="avg-wait-time" class="stat-value">0 ms</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Max Wait Time</div>
+                        <div id="max-wait-time" class="stat-value">0 ms</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">CS Entries</div>
+                        <div id="cs-entries" class="stat-value">0</div>
+                    </div>
+                </div>
+                
+                <div class="simulation">
+                    <div class="column">
+                        <h3>Process States</h3>
+                        <div class="process-group" id="processes">
+                            <!-- Processes will be added here -->
+                        </div>
+                        
+                        <div class="critical-section">
+                            <div class="critical-section-label">Critical Section</div>
+                            <div id="critical-section-content">
+                                <p>No process is currently in the critical section.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="column">
+                        <h3>Execution Log</h3>
+                        <div class="log-container" id="log">
+                            <!-- Log entries will be added here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="theory-tab" class="tab-pane">
+                <h3>The Critical Section Problem</h3>
+                
+                <p>In concurrent programming, the critical section problem involves ensuring that when processes share common resources, they do not interfere with each other's operations. A critical section is a part of a program where shared resources are accessed.</p>
+                
+                <h4>Requirements for a Valid Solution</h4>
+                <ol>
+                    <li><strong>Mutual Exclusion:</strong> Only one process can execute in the critical section at a time.</li>
+                    <li><strong>Progress:</strong> If no process is in the critical section and some processes want to enter, then only those processes that are not in the remainder section can participate in the decision, and this decision cannot be postponed indefinitely.</li>
+                    <li><strong>Bounded Waiting:</strong> There exists a bound on the number of times other processes can enter their critical sections after a process has made a request to enter its critical section and before that request is granted.</li>
+                </ol>
+                
+                <h4>Algorithms Implemented</h4>
+                
+                <p><strong>Peterson's Algorithm</strong></p>
+                <p>A simple solution for the critical section problem between two processes. It uses two variables:</p>
+                <ul>
+                    <li><code>flag[i]</code>: Indicates if process i wants to enter the critical section</li>
+                    <li><code>turn</code>: Indicates which process has priority</li>
+                </ul>
+                
+                <p><strong>Test-and-Set</strong></p>
+                <p>Uses a hardware atomic instruction that tests and sets a memory location in one indivisible operation.</p>
+                
+                <p><strong>Binary Semaphore</strong></p>
+                <p>A synchronization mechanism that maintains a count (initialized to 1 for mutual exclusion). Processes wait if the count is 0, and decrement it when entering the critical section.</p>
+                
+                <p><strong>Mutex</strong></p>
+                <p>A mutual exclusion device that acts like a lock. Only one process can acquire the lock at a time.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let running = false;
+        let processCount = 2;
+        let algorithm = 'petersons';
+        let speed = 5;
+        let processes = [];
+        let mutexViolations = 0;
+        let totalWaitTime = 0;
+        let maxWaitTime = 0;
+        let csEntries = 0;
+        let waitingProcesses = [];
+        
+        // Algorithm-specific variables
+        let flag = [false, false, false, false, false];
+        let turn = 0;
+        let lock = false;
+        let semaphore = 1;
+        
+        // Initialize the simulation when the document is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            init();
+        });
+        
+        // Initialize the simulation
+        function init() {
+            updateProcessCount();
+            updateSpeed();
+            changeAlgorithm();
+            logMessage("Simulation initialized. Select an algorithm and press Start.");
+        }
+        
+        // Switch between tabs
+        function showTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+            
+            document.querySelector(`.tab[onclick="showTab('${tabName}')"]`).classList.add('active');
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+        }
+        
+        // Update process count
+        function updateProcessCount() {
+            processCount = parseInt(document.getElementById('numProcesses').value);
+            resetSimulation();
+        }
+        
+        // Update simulation speed
+        function updateSpeed() {
+            speed = parseInt(document.getElementById('speed').value);
+            const speedDisplay = document.getElementById('speedDisplay');
+            if (speed <= 3) {
+                speedDisplay.textContent = "Slow";
+            } else if (speed <= 7) {
+                speedDisplay.textContent = "Medium";
+            } else {
+                speedDisplay.textContent = "Fast";
+            }
+        }
+        
+        // Change algorithm
+        function changeAlgorithm() {
+            algorithm = document.getElementById('algorithm').value;
+            const algorithmDescriptionElement = document.getElementById('algorithm-description');
+            
+            if (algorithm === 'petersons') {
+                algorithmDescriptionElement.innerHTML = `
+                    <p><strong>Peterson's Algorithm</strong> is a solution to the critical section problem for two processes. It uses two variables: a boolean array <code>flag</code> where <code>flag[i]</code> indicates if process i wants to enter the critical section, and a variable <code>turn</code> that indicates which process has priority if both want to enter.</p>
+                    <p>The algorithm ensures mutual exclusion and freedom from deadlock and starvation.</p>
+                `;
+                document.getElementById('numProcesses').value = '2';
+                document.getElementById('numProcesses').disabled = true;
+                processCount = 2;
+            } else if (algorithm === 'testAndSet') {
+                algorithmDescriptionElement.innerHTML = `
+                    <p><strong>Test-and-Set</strong> uses a hardware atomic instruction that tests and sets a memory location in one indivisible operation.</p>
+                    <p>The instruction returns the old value and sets the new value atomically, allowing for mutual exclusion.</p>
+                `;
+                document.getElementById('numProcesses').disabled = false;
+            } else if (algorithm === 'semaphore') {
+                algorithmDescriptionElement.innerHTML = `
+                    <p><strong>Binary Semaphore</strong> is a synchronization mechanism that maintains a count (initialized to 1 for mutual exclusion).</p>
+                    <p>Processes wait if the count is 0, and decrement it when entering the critical section. When a process exits, it increments the count.</p>
+                `;
+                document.getElementById('numProcesses').disabled = false;
+            } else if (algorithm === 'mutex') {
+                algorithmDescriptionElement.innerHTML = `
+                    <p><strong>Mutex</strong> (Mutual Exclusion) is a mechanism that acts like a lock. Only one process can acquire the lock at a time.</p>
+                    <p>Processes must acquire the lock before entering the critical section and release it after exiting.</p>
+                `;
+                document.getElementById('numProcesses').disabled = false;
+            }
+            
+            resetSimulation();
+        }
+        
+        // Create process elements
+        function createProcesses() {
+            const processContainer = document.getElementById('processes');
+            processContainer.innerHTML = '';
+            
+            processes = [];
+            for (let i = 0; i < processCount; i++) {
+                const process = {
+                    id: i,
+                    state: 'remainder',
+                    inCS: false,
+                    waitStart: 0,
+                    waitTime: 0
+                };
+                
+                processes.push(process);
+                
+                const processElement = document.createElement('div');
+                processElement.id = `process-${i}`;
+                processElement.className = `process remainder`;
+                processElement.innerHTML = `
+                    <div class="process-header">
+                        <div>Process ${i}</div>
+                        <div class="process-state">Remainder Section</div>
+                    </div>
+                    <div class="process-details" id="process-details-${i}">
+                        State: Executing non-critical code
+                    </div>
+                `;
+                
+                processContainer.appendChild(processElement);
+            }
+        }
+        
+        // Update process display
+        function updateProcessDisplay(process) {
+            const processElement = document.getElementById(`process-${process.id}`);
+            const detailsElement = document.getElementById(`process-details-${process.id}`);
+            
+            processElement.className = `process ${process.state}`;
+            
+            let stateText;
+            let detailsText;
+            
+            if (process.state === 'remainder') {
+                stateText = 'Remainder Section';
+                detailsText = 'Executing non-critical code';
+            } else if (process.state === 'waiting') {
+                stateText = 'Waiting';
+                detailsText = 'Requesting entry to critical section';
+            } else if (process.state === 'critical') {
+                stateText = 'Critical Section';
+                detailsText = 'Executing critical code';
+            }
+            
+            processElement.querySelector('.process-state').textContent = stateText;
+            detailsElement.textContent = detailsText;
+            
+            // Update critical section display
+            const criticalSectionElement = document.getElementById('critical-section-content');
+            
+            if (process.state === 'critical') {
+                criticalSectionElement.innerHTML = `
+                    <p><strong>Process ${process.id}</strong> is currently in the critical section.</p>
+                    <p>This process has exclusive access to shared resources.</p>
+                `;
+            } else {
+                let inCritical = processes.find(p => p.state === 'critical');
+                if (!inCritical) {
+                    criticalSectionElement.innerHTML = `
+                        <p>No process is currently in the critical section.</p>
+                    `;
+                }
+            }
+        }
+        
+        // Add log message
+        function logMessage(message) {
+            const log = document.getElementById('log');
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            
+            const time = new Date().toLocaleTimeString();
+            logEntry.innerHTML = `
+                <span class="time-entry">[${time}]</span> ${message}
+            `;
+            
+            log.appendChild(logEntry);
+            log.scrollTop = log.scrollHeight;
+        }
+        
+        // Start simulation
+        function startSimulation() {
+            if (running) return;
+            
+            running = true;
+            document.getElementById('startButton').disabled = true;
+            document.getElementById('pauseButton').disabled = false;
+            document.getElementById('algorithm').disabled = true;
+            document.getElementById('numProcesses').disabled = true;
+            
+            logMessage(`Starting simulation with ${processCount} processes using ${getAlgorithmName(algorithm)}.`);
+            
+            // Reset algorithm variables
+            resetAlgorithmVariables();
+            
+            // Start the processes
+            for (let i = 0; i < processCount; i++) {
+                setTimeout(() => {
+                    if (running) {
+                        runProcess(i);
+                    }
+                }, Math.random() * 1000);
+            }
+        }
+        
+        // Get algorithm name for display
+        function getAlgorithmName(algorithmValue) {
+            switch (algorithmValue) {
+                case 'petersons': return "Peterson's Algorithm";
+                case 'testAndSet': return "Test-and-Set";
+                case 'semaphore': return "Binary Semaphore";
+                case 'mutex': return "Mutex";
+                default: return algorithmValue;
+            }
+        }
+        
+        // Pause simulation
+        function pauseSimulation() {
+            running = false;
+            document.getElementById('startButton').disabled = false;
+            document.getElementById('pauseButton').disabled = true;
+            logMessage("Simulation paused.");
+        }
+        
+        // Reset simulation
+        function resetSimulation() {
+            running = false;
+            document.getElementById('startButton').disabled = false;
+            document.getElementById('pauseButton').disabled = true;
+            document.getElementById('algorithm').disabled = false;
+            
+            if (algorithm !== 'petersons') {
+                document.getElementById('numProcesses').disabled = false;
+            }
+            
+            createProcesses();
+            resetAlgorithmVariables();
+            resetStats();
+            
+            logMessage("Simulation reset.");
+        }
+        
+        // Reset algorithm variables
+        function resetAlgorithmVariables() {
+            flag = Array(processCount).fill(false);
+            turn = 0;
+            lock = false;
+            semaphore = 1;
+            waitingProcesses = [];
+        }
+        
+        // Reset statistics
+        function resetStats() {
+            mutexViolations = 0;
+            totalWaitTime = 0;
+            maxWaitTime = 0;
+            csEntries = 0;
+            
+            document.getElementById('mutex-violations').textContent = mutexViolations;
+            document.getElementById('avg-wait-time').textContent = "0 ms";
+            document.getElementById('max-wait-time').textContent = "0 ms";
+            document.getElementById('cs-entries').textContent = csEntries;
+        }
+        
+        // Run a single process
+        function runProcess(id) {
+            if (!running) return;
+            
+            const process = processes[id];
+            
+            // State machine
+            if (process.state === 'remainder') {
+                // Randomly decide if the process wants to enter the critical section
+                if (Math.random() < 0.3) {
+                    process.state = 'waiting';
+                    process.waitStart = Date.now();
+                    waitingProcesses.push(id);
+                    
+                    updateProcessDisplay(process);
+                    logMessage(`Process ${id} wants to enter the critical section.`);
+                    
+                    // Execute entry protocol
+                    executeEntryProtocol(id);
+                }
+            } else if (process.state === 'waiting') {
+                // Check if the process can enter the critical section
+                if (checkEntryCondition(id)) {
+                    process.state = 'critical';
+                    process.inCS = true;
+                    
+                    // Remove from waiting list
+                    waitingProcesses = waitingProcesses.filter(pid => pid !== id);
+                    
+                    // Calculate wait time
+                    const waitTime = Date.now() - process.waitStart;
+                    totalWaitTime += waitTime;
+                    maxWaitTime = Math.max(maxWaitTime, waitTime);
+                    
+                    // Check for mutual exclusion violations
+                    const inCritical = processes.filter(p => p.inCS && p.id !== id);
+                    if (inCritical.length > 0) {
+                        mutexViolations++;
+                        document.getElementById('mutex-violations').textContent = mutexViolations;
+                        logMessage(`VIOLATION: Process ${id} entered the critical section while Process ${inCritical[0].id} was already there!`);
+                    }
+                    
+                    updateProcessDisplay(process);
+                    logMessage(`Process ${id} enters the critical section.`);
+                    
+                    csEntries++;
+                    document.getElementById('cs-entries').textContent = csEntries;
+                    
+                    // Calculate average wait time
+                    const avgWaitTime = Math.round(totalWaitTime / csEntries);
+                    document.getElementById('avg-wait-time').textContent = `${avgWaitTime} ms`;
+                    document.getElementById('max-wait-time').textContent = `${maxWaitTime} ms`;
+                    
+                    // Stay in critical section for a while
+                    setTimeout(() => {
+                        if (running) {
+                            process.state = 'remainder';
+                            process.inCS = false;
+                            
+                            // Execute exit protocol
+                            executeExitProtocol(id);
+                            
+                            updateProcessDisplay(process);
+                            logMessage(`Process ${id} exits the critical section.`);
+                        }
+                    }, (Math.random() * 1000) / speed);
+                }
+            }
+            
+            // Schedule next run
+            setTimeout(() => {
+                if (running) {
+                    runProcess(id);
+                }
+            }, (Math.random() * 2000) / speed);
+        }
+        
+        // Check entry condition based on algorithm
+        function checkEntryCondition(id) {
+            switch (algorithm) {
+                case 'petersons':
+                    return !flag[1-id] || turn !== id;
+                case 'testAndSet':
+                    return !lock;
+                case 'semaphore':
+                    return semaphore === 1;
+                case 'mutex':
+                    return !lock;
+                default:
+                    return true;
+            }
+        }
+        
+        // Execute entry protocol based on algorithm
+        function executeEntryProtocol(id) {
+            switch (algorithm) {
+                case 'petersons':
+                    flag[id] = true;
+                    turn = 1-id;
+                    logMessage(`Process ${id} sets flag[${id}] = true, turn = ${1-id}`);
+                    break;
+                case 'testAndSet':
+                    // Attempt to acquire lock
+                    if (!lock) {
+                        lock = true;
+                        logMessage(`Process ${id} attempts to acquire lock (Test-and-Set)`);
+                    } else {
+                        logMessage(`Process ${id} cannot acquire lock (Test-and-Set)`);
+                    }
+                    break;
+                case 'semaphore':
+                    // Attempt to acquire semaphore
+                    if (semaphore === 1) {
+                        semaphore = 0;
+                        logMessage(`Process ${id} decrements semaphore from 1 to 0`);
+                    } else {
+                        logMessage(`Process ${id} cannot acquire semaphore (value = ${semaphore})`);
+                    }
+                    break;
+                case 'mutex':
+                    // Attempt to acquire mutex
+                    if (!lock) {
+                        lock = true;
+                        logMessage(`Process ${id} acquires mutex lock`);
+                    } else {
+                        logMessage(`Process ${id} cannot acquire mutex lock`);
+                    }
+                    break;
+            }
+        }
+        
+        // Execute exit protocol based on algorithm
+        function executeExitProtocol(id) {
+            switch (algorithm) {
+                case 'petersons':
+                    flag[id] = false;
+                    logMessage(`Process ${id} sets flag[${id}] = false`);
+                    break;
+                case 'testAndSet':
+                    lock = false;
+                    logMessage(`Process ${id} releases lock`);
+                    break;
+                case 'semaphore':
+                    semaphore = 1;
+                    logMessage(`Process ${id} increments semaphore from 0 to 1`);
+                    break;
+                case 'mutex':
+                    lock = false;
+                    logMessage(`Process ${id} releases mutex lock`);
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>
