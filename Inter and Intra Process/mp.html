@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Message Passing Simulation</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #3f37c9;
+      --accent: #4cc9f0;
+      --light: #f8f9fa;
+      --dark: #212529;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: var(--light);
+      min-height: 100vh;
+    }
+    
+    .navbar {
+      background-color: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .navbar-brand {
+      font-weight: 700;
+      color: var(--light);
+    }
+    
+    .nav-link {
+      color: var(--light);
+      position: relative;
+      margin: 0 10px;
+    }
+    
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      border-radius: 15px;
+      padding: 30px;
+      margin-top: 50px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .process-container {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+    
+    .process-container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .form-control {
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--light);
+      border-radius: 10px;
+      padding: 12px 15px;
+    }
+    
+    .form-control:focus {
+      background-color: rgba(255, 255, 255, 0.15);
+      color: var(--light);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 0.25rem rgba(76, 201, 240, 0.25);
+    }
+    
+    .btn-primary {
+      background-color: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-weight: 500;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(76, 201, 240, 0.3);
+      color: var(--dark);
+    }
+    
+    .btn-primary:hover {
+      background-color: #33a1cc;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(76, 201, 240, 0.4);
+    }
+    
+    h1, h2 {
+      font-weight: 700;
+    }
+    
+    .message-box {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 10px;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    
+    .message-box:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+    
+    .message-log {
+      max-height: 300px;
+      overflow-y: auto;
+      margin-top: 30px;
+      padding: 10px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.1);
+    }
+    
+    .message-log::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    .message-log::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+    }
+    
+    .message-log::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+    }
+    
+    .process-icon {
+      font-size: 1.8rem;
+      color: var(--accent);
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="../index.html">OS VISUALIZER</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="../index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="home.html">Back to IPC</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-5">
+    <div class="card">
+      <div class="text-center mb-4">
+        <h1>Message Passing Through Kernel</h1>
+        <p class="lead">
+          Experience how processes communicate by passing messages through the kernel.
+          This simulation demonstrates the core concept of inter-process communication.
+        </p>
+      </div>
+      
+      <div class="row mt-4">
+        <div class="col-md-6 mb-4">
+          <div class="process-container">
+            <div class="text-center">
+              <div class="process-icon">
+                <i class="fas fa-laptop-code"></i>
+              </div>
+              <h2>Process A</h2>
+            </div>
+            <div class="input-group mt-3">
+              <input id="processAInput" class="form-control" type="text" placeholder="Enter a message" />
+              <button onclick="sendMessage('processAInput', 'Process B')" class="btn btn-primary">
+                <i class="fas fa-paper-plane me-2"></i>Send
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-6 mb-4">
+          <div class="process-container">
+            <div class="text-center">
+              <div class="process-icon">
+                <i class="fas fa-microchip"></i>
+              </div>
+              <h2>Process B</h2>
+            </div>
+            <div class="input-group mt-3">
+              <input id="processBInput" class="form-control" type="text" placeholder="Enter a message" />
+              <button onclick="sendMessage('processBInput', 'Process A')" class="btn btn-primary">
+                <i class="fas fa-paper-plane me-2"></i>Send
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row mt-3">
+        <div class="col-12">
+          <h3 class="text-center mb-3">
+            <i class="fas fa-exchange-alt me-2"></i>Kernel Message Log
+          </h3>
+          <div id="messageLog" class="message-log"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    const kernel = {
+      // Method to send a message
+      sendMessage: function (sender, receiver, message) {
+        const messageLog = document.getElementById('messageLog');
+        const messageBox = document.createElement('div');
+        messageBox.className = 'message-box';
+        messageBox.innerHTML = `<strong>${sender}</strong> to <strong>${receiver}</strong>: "${message}"`;
+        messageLog.appendChild(messageBox);
+        // Auto scroll to bottom
+        messageLog.scrollTop = messageLog.scrollHeight;
+      }
+    };
+
+    // Function to send a message from one process to another
+    function sendMessage(inputId, receiver) {
+      const sender = inputId.includes('processA') ? 'Process A' : 'Process B';
+      const message = document.getElementById(inputId).value;
+      if (message.trim() !== '') {
+        kernel.sendMessage(sender, receiver, message);
+        document.getElementById(inputId).value = '';
+      }
+    }
+    
+    // Add event listener for Enter key
+    document.getElementById('processAInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        sendMessage('processAInput', 'Process B');
+      }
+    });
+    
+    document.getElementById('processBInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        sendMessage('processBInput', 'Process A');
+      }
+    });
+  </script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+</body>
+</html>
