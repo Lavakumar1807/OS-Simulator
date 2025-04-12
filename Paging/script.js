@@ -17,11 +17,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const optimalSequenceInput = document.getElementById('optimal-sequence');
     const optimalSetupSection = document.getElementById('optimal-setup-section');
     const descriptions = { // desc of algos 
-        'fifo': '',
-        'lru': '',
-        'lfu': '',
-        'random': '',
-        'optimal': ''
+        'fifo': 'First-In-First-Out: Replaces the page that has been in memory the longest.',
+        'lru': 'Least Recently Used: Replaces the page that has not been used for the longest period of time.',
+        'lfu': 'Least Frequently Used: Replaces the page with the lowest access frequency.',
+        'mfu': 'Most Frequently Used: Replaces the page with the highest access frequency.',
+        'random': 'Random: Replaces a random page from memory.',
+        'optimal': 'Optimal: Replaces the page that will not be used for the longest period of time in the future.'
     };
     algorithmSelect.addEventListener('change', function() { // updating 
         const selectedAlgorithm = algorithmSelect.value;
@@ -161,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (currentAlgorithm === 'lru') {
                 pageUsage[pageNum] = Date.now();
             }
-            if (currentAlgorithm === 'lfu') {
+            if (currentAlgorithm === 'lfu' || currentAlgorithm === 'mfu') {
                 pageFrequency[pageNum]++;
             }
             addToHistory(pageNum, true);
@@ -182,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (currentAlgorithm === 'lru') {
                     pageUsage[pageNum] = Date.now();
                 }
-                if (currentAlgorithm === 'lfu') {
+                if (currentAlgorithm === 'lfu' || currentAlgorithm === 'mfu') {
                     pageFrequency[pageNum] = 1;
                 }
             } else {
@@ -249,6 +250,54 @@ document.addEventListener('DOMContentLoaded', function() {
                         pageOrder.push(pageNum);
                         
                         
+                        pageFrequency[pageNum] = 1;
+                        break;
+
+                    case 'mfu':
+                        // Find the most frequently used page
+                        let mostFrequency = -1;
+                        let mostFreqPages = [];
+                        
+                        // First find the highest frequency
+                        memory.forEach(page => {
+                            if (pageFrequency[page] > mostFrequency) {
+                                mostFrequency = pageFrequency[page];
+                            }
+                        });
+                        
+                        // Find all pages with that frequency
+                        memory.forEach(page => {
+                            if (pageFrequency[page] === mostFrequency) {
+                                mostFreqPages.push(page);
+                            }
+                        });
+                        
+                        // If there are multiple pages with the same frequency
+                        if (mostFreqPages.length > 1) {
+                            // Use FIFO as tie-breaker by selecting the oldest one
+                            let oldestMostFreqPage = null;
+                            let oldestIndex = Infinity;
+                            
+                            mostFreqPages.forEach(page => {
+                                const indexInOrder = pageOrder.indexOf(page);
+                                if (indexInOrder < oldestIndex) {
+                                    oldestIndex = indexInOrder;
+                                    oldestMostFreqPage = page;
+                                }
+                            });
+                            
+                            replaceIndex = memory.indexOf(oldestMostFreqPage);
+                        } else {
+                            // If only one page has the highest frequency
+                            replaceIndex = memory.indexOf(mostFreqPages[0]);
+                        }
+                        
+                        // Remove the replaced page from pageOrder and add new page
+                        const replacedPageMfu = memory[replaceIndex];
+                        pageOrder.splice(pageOrder.indexOf(replacedPageMfu), 1);
+                        pageOrder.push(pageNum);
+                        
+                        // Initialize the frequency count for the new page
                         pageFrequency[pageNum] = 1;
                         break;
                     
