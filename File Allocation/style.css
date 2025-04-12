@@ -1,0 +1,348 @@
+/* ==== Base Styling ==== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #121212;
+  color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==== Navbar ==== */
+.navbar {
+  background-color: #1e1e1e;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #4caf50;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links li a {
+  color: #ccc;
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+
+.nav-links li a:hover {
+  color: #4caf50;
+}
+
+/* ==== Header ==== */
+.main-header {
+  text-align: center;
+  padding: 2rem 1rem;
+  background-color: #222;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.main-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.subheading {
+  font-size: 1rem;
+  color: #aaa;
+}
+
+/* ==== Controls Section ==== */
+.controls {
+  background-color: #181818;
+  padding: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.input-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-section label {
+  margin-bottom: 5px;
+  color: #ccc;
+}
+
+.input-section input,
+.input-section select {
+  padding: 10px;
+  border: 1px solid #444;
+  border-radius: 8px;
+  background-color: #2c2c2c;
+  color: #fff;
+  font-size: 1rem;
+  min-width: 200px;
+}
+
+.input-section button {
+  margin-top: 10px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.input-section button:hover {
+  background-color: #66bb6a;
+}
+
+/* ==== Tools Panel ==== */
+.tools-panel {
+  background-color: #161616;
+  padding: 1.5rem;
+  margin: 1rem;
+  border-radius: 12px;
+  max-width: 800px;
+  margin-inline: auto;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.tool-row {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.tool-row select {
+  padding: 0.5rem;
+  border-radius: 6px;
+  background: #2e2e2e;
+  color: #fff;
+}
+
+/* ==== Memory Grid ==== */
+.memory-section {
+  text-align: center;
+  padding: 2rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(10, 40px);
+  gap: 6px;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.block {
+  width: 40px;
+  height: 40px;
+  background-color: #3a3a3a;
+  border-radius: 6px;
+  color: white;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.block:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.allocated {
+  background-color: #4caf50;
+}
+
+.linked {
+  background-color: #ff9800;
+}
+
+.indexed {
+  background-color: #9c27b0;
+}
+
+.free {
+  background-color: #3a3a3a;
+}
+
+/* ==== Legend ==== */
+.legend {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.legend-box {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-right: 4px;
+  border-radius: 3px;
+}
+
+/* ==== Stats Section ==== */
+.memory-stats {
+  padding: 1.5rem;
+  background-color: #191919;
+  margin: 1rem auto;
+  max-width: 600px;
+  border-radius: 10px;
+  color: #bbb;
+}
+
+.memory-stats ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+}
+
+/* ==== Output Message ==== */
+.output-message {
+  text-align: center;
+  font-size: 1rem;
+  color: #ddd;
+  margin: 1rem 0;
+}
+
+/* ==== History Log ==== */
+.history-section {
+  padding: 2rem;
+  background-color: #111;
+}
+
+.history-log {
+  background-color: #1b1b1b;
+  padding: 1rem;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #333;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+.history-log p {
+  margin-bottom: 0.5rem;
+}
+
+/* ==== Modal Styling ==== */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.75);
+}
+
+.modal-content {
+  background-color: #1f1f1f;
+  margin: 10% auto;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 500px;
+  color: #fff;
+  position: relative;
+}
+
+.modal-content h2 {
+  margin-bottom: 1rem;
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* ==== Footer ==== */
+.footer {
+  background-color: #1a1a1a;
+  color: #aaa;
+  padding: 1rem;
+  text-align: center;
+  margin-top: auto;
+}
+
+/* ==== Light Theme ==== */
+body.light {
+  background-color: #f5f5f5;
+  color: #111;
+}
+
+body.light .navbar,
+body.light .controls,
+body.light .tools-panel,
+body.light .memory-stats,
+body.light .history-log,
+body.light .modal-content {
+  background-color: #fff;
+  color: #111;
+}
+
+body.light .block {
+  background-color: #e0e0e0;
+  color: #000;
+}
+
+body.light .allocated {
+  background-color: #81c784;
+}
+
+body.light .linked {
+  background-color: #ffb74d;
+}
+
+body.light .indexed {
+  background-color: #ce93d8;
+}
+
+/* ==== Animations ==== */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+.block.animated {
+  animation: pulse 0.5s ease;
+}
+
+/* ==== Responsive ==== */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(8, 35px);
+  }
+  .tool-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .memory-stats ul {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}

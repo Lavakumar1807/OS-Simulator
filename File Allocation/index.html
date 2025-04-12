@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>File Allocation Simulator Game</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- NAVIGATION -->
+  <nav class="navbar">
+    <div class="nav-left">
+      <span class="logo">FASimulator</span>
+    </div>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#" onclick="openHelp()">Help</a></li>
+        <li><a href="#" onclick="openAbout()">About</a></li>
+        <li><a href="#" onclick="openSettings()">Settings</a></li>
+        <li><a href="#" onclick="toggleTheme()">Toggle Theme</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="main-header">
+    <h1>File Allocation Simulator</h1>
+    <p class="subheading">Simulate various file allocation strategies used in Operating Systems</p>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="container">
+    <!-- USER CONTROLS -->
+    <section class="controls">
+      <div class="input-section">
+        <label for="fileName">File Name:</label>
+        <input type="text" id="fileName" placeholder="e.g. data.txt" />
+      </div>
+      <div class="input-section">
+        <label for="fileSize">File Size:</label>
+        <input type="number" id="fileSize" min="1" max="20" />
+      </div>
+      <div class="input-section">
+        <label for="allocationType">Allocation Type:</label>
+        <select id="allocationType">
+          <option value="contiguous">Contiguous</option>
+          <option value="linked">Linked</option>
+          <option value="indexed">Indexed</option>
+        </select>
+      </div>
+      <div class="input-section">
+        <button>Simulate Allocation</button>
+        <button onclick="resetGrid()">Reset Memory</button>
+      </div>
+    </section>
+
+    <!-- TOOLS PANEL -->
+    <section class="tools-panel">
+      <h2>Tools & Options</h2>
+      <div class="tool-row">
+        <label for="gridSize">Grid Size:</label>
+        <select id="gridSize" onchange="resizeGrid()">
+          <option value="100">10 x 10</option>
+          <option value="144">12 x 12</option>
+          <option value="225">15 x 15</option>
+        </select>
+        <label for="blockSize">Block Size:</label>
+        <select id="blockSize" onchange="adjustBlockSize()">
+          <option value="small">Small</option>
+          <option value="medium" selected>Medium</option>
+          <option value="large">Large</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- MEMORY DISPLAY -->
+    <section class="memory-section">
+      <h2>Memory Grid</h2>
+      <div class="legend">
+        <span class="legend-box allocated"></span> Contiguous
+        <span class="legend-box linked"></span> Linked
+        <span class="legend-box indexed"></span> Indexed
+        <span class="legend-box free"></span> Free
+      </div>
+      <div class="grid" id="memoryGrid">
+        <!-- JS dynamically inserts blocks -->
+      </div>
+    </section>
+
+    <!-- MEMORY STATS -->
+    <section class="memory-stats">
+      <h3>Memory Stats</h3>
+      <ul>
+        <li>Total Blocks: <span id="totalBlocks">100</span></li>
+        <li>Used Blocks: <span id="usedBlocks">0</span></li>
+        <li>Free Blocks: <span id="freeBlocks">100</span></li>
+        <li>Files Stored: <span id="fileCount">0</span></li>
+      </ul>
+    </section>
+
+   <!-- OUTPUT MESSAGE -->
+<section id="outputMessage" class="output-message"></section>
+
+<!-- FILE HISTORY -->
+<section class="history-section">
+  <h2>Allocation History</h2>
+  <div id="historyLog" class="history-log">
+    <p>No actions yet. Start a simulation to track history.</p>
+  </div>
+</section>
+
+  </main>
+
+  <!-- FILE INSPECTOR MODAL -->
+  <div class="modal" id="inspectorModal">
+    <div class="modal-content">
+      <span class="close" onclick="closeInspector()">&times;</span>
+      <h2>Block Details</h2>
+      <p id="blockDetails">Click a block to inspect its status.</p>
+    </div>
+  </div>
+
+  <!-- HELP MODAL -->
+  <div class="modal" id="helpModal">
+    <div class="modal-content">
+      <span class="close" onclick="closeHelp()">&times;</span>
+      <h2>Help</h2>
+      <p>📌 Use this simulator to visualize different file allocation strategies:</p>
+      <ul>
+        <li><strong>Contiguous:</strong> Files are stored in consecutive blocks.</li>
+        <li><strong>Linked:</strong> Each block points to the next one.</li>
+        <li><strong>Indexed:</strong> Index block maintains list of all block addresses.</li>
+      </ul>
+      <p>➕ You can also adjust grid size and block visual size from the options panel.</p>
+    </div>
+  </div>
+
+  <!-- ABOUT MODAL -->
+  <div class="modal" id="aboutModal">
+    <div class="modal-content">
+      <span class="close" onclick="closeAbout()">&times;</span>
+      <h2>About This Project</h2>
+      <p>This is a mini project for CSE - Operating Systems course, built to demonstrate file allocation methods.</p>
+      <p>💡 Developed by Himanshu | NITK Surathkal</p>
+      <p>📅 Year: 2025</p>
+    </div>
+  </div>
+
+  <!-- SETTINGS MODAL -->
+  <div class="modal" id="settingsModal">
+    <div class="modal-content">
+      <span class="close" onclick="closeSettings()">&times;</span>
+      <h2>Settings</h2>
+      <p>⚙️ Future features like save state, export to CSV, or persistent memory can be added here.</p>
+      <p>This section is under construction 🚧</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>&copy; 2025 File Allocation Simulator | OS Mini Project by Himanshu</p>
+  </footer>
+
+  <!-- JAVASCRIPT -->
+  <script src="script.js"></script>
+</body>
+</html>
