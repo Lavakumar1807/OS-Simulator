@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Disk Scheduling Simulator</title>
+    <link rel="stylesheet" href="style.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Disk Scheduling Simulator</h2>
+
+        <label>Max Disk Range:</label>
+        <input type="number" id="maxRange" value="200" />
+
+        <label>Enter Disk Requests (comma-separated):</label>
+        <input type="text" id="requests" placeholder="e.g. 82,170,43,140,24,16,190" />
+
+        <label>Enter Initial Head Position:</label>
+        <input type="number" id="head" value="50" />
+
+        <label>Select Algorithm:</label>
+        <select id="algorithm">
+            <option value="fcfs">FCFS</option>
+            <option value="sstf">SSTF</option>
+            <option value="scan">SCAN</option>
+            <option value="look">LOOK</option>
+            <option value="cscan">C-SCAN</option>
+            <option value="clook">C-LOOK</option>
+        </select>
+
+        <div id="directionContainer" style="display: none;">
+            <label>Select Direction (for SCAN, LOOK, C-LOOK):</label>
+            <select id="direction">
+                <option value="left">Left</option>
+                <option value="right">Right</option>
+            </select>
+        </div>
+
+        <div id="algoDescription" class="description-box"></div>
+
+        <button onclick="runSimulation()">Run Simulation</button>
+        <button onclick="compareAlgorithms()">Compare Algorithms</button>
+
+        <div id="output"></div>
+
+        <canvas id="diskChart"></canvas>
+        <canvas id="compareChart"></canvas>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
