@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Buffering Algorithm</title>
+    <link href="./css/output.css" rel="stylesheet" >
+    <link href="./css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="grid bg-black text-white h-32 text-center align-text-bottom place-items-center"><strong>Page Buffering Algorithm</strong></div>
+
+<div class="out-container">
+    <div class="text-container">
+        
+        <span class="paragraph-container">
+            <strong>Page Buffering ALgorithm</strong>
+           
+                <br>
+                <p class="mx-10">The Page Buffering Algorithm (PBA) is an enhancement of 
+                        traditional page replacement algorithms used in virtual memory management.
+                        Its goal is to improve performance and efficiency when handling page faults.
+
+                        When a page needs to be replaced (because the memory is full), 
+                        instead of immediately discarding the old page, it is moved into
+                        a buffer pool (also called a free or secondary list). This buffer
+                        stores recently evicted pages for a short time, allowing the system to
+                        quickly retrieve them if they are needed again soon, avoiding expensive disk I/O.<br>
+                    </p>
+        </span>
+        <br>
+        </div>
+        <div class ="text-container">
+        <span class="paragraph-container">
+            <br>
+            <strong> How it works </strong>
+        <br>
+                <p class="mx-10">
+                    1 Page Access:
+
+                    If the page is in memory, it’s a hit.
+
+                    If not, it’s a page fault.<br>
+
+                    2 Page Fault Handling:
+
+                    Check if the page is in the buffer (a recently evicted page list).
+
+                    If it's in the buffer, it can be quickly restored to memory — this is called a soft miss.
+
+                    If it's not in the buffer, it's a hard miss, and the page must be fetched from disk.<br>
+
+                    3 Replacement Policy:
+
+                    When memory is full, use a basic replacement algorithm like Second Chance, FIFO, or LRU to evict a page.
+
+                    Instead of discarding it, place the evicted page into the buffer pool.<br>
+
+                    4 Buffer Management:
+
+                    The buffer has limited size.
+
+                    It may use FIFO to manage its entries — oldest pages get removed first.<br>
+                </p>
+                <br>                
+        </span>
+    </div>
+
+        <div class="text-container">
+            <span class="paragraph-container">
+                <br>
+                <strong><br>Page Buffering Algorithm</strong>
+            </span>
+
+        </div>
+    <div id="CreateProcess" class="text-container" >
+        <textarea  class="auto-resize-textarea" placeholder="Write your code here"  id="input"></textarea>
+    </div>
+    <button class="bg-black text-white rounded w-32 justify-center" id="run">Run</button>
+    <div id="CreateProcessOutput" class="text-container">
+        <textarea class="auto-resize-textarea" placeholder="output" id="output"></textarea>
+    </div>
+
+</div>
+    <script src="pagebuffer.js"></script>
+</body>
+</html>
