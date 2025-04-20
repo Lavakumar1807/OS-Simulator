@@ -10,6 +10,20 @@ server.use(express.json());
 const cors = require('cors');
 server.use(cors());
 
+<<<<<<< HEAD:SystemCallsAndIPC/server.js
+=======
+server.listen(PORT, (err)=>
+{
+    if(err)
+    {
+        console.error("An error occured while listening to the ports");
+    }
+    else
+    {
+        console.log(`Server is now listening at port http://localhost:${PORT} \n http://localhost:${PORT}/ipc`);
+    }
+});
+>>>>>>> 8a1e40ff4278c6d537193bb2e58ef811679e5894:SystemCallsAndIPCAndPageBufferingAlgorithm/server.js
 
 server.use(express.static(path.join(__dirname, 'views')));
 

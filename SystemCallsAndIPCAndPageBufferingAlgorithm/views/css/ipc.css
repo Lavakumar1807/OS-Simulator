@@ -1,0 +1,137 @@
+/**
+    If you want to center the grid container
+    itself (on the page or within its parent
+    container), you can use justify-content 
+    and align-content
+
+    If you want to center the content inside
+    the grid container, you can use justify-items
+    and align-items
+
+    To center individual grid items, you 
+    can use justify-self and align-self
+
+
+*/
+
+/**
+For fixed size submenu contained within container
+container position:relative;
+menu position:fixed
+top:0
+bottom:0
+right:0
+left:0
+
+
+*/
+.header {
+    display:grid;
+    grid-template-columns: 20px -5;
+    height:64px;
+    background-color:rgb(20, 38, 199);
+    border-radius:2px;
+    border-color:rgb(59, 200, 153);
+    border:2px;
+    grid-template-columns: repeat(15,1fr);
+    
+    text-align:center;
+    }
+.subheader {
+    display:grid;
+    grid-template-columns:repeat(20 ,1fr);
+    background-color:black;
+    color:white;
+    place-items:center;
+    justify-items:left;
+}
+.menubtn{
+    background-color:aliceblue;
+    border-radius:5px;
+    grid-column:1/3;
+}
+.menu-list{
+    display:grid;
+    grid-template-rows:repeat(7,1fr);
+    position:absolute; /**absolute is between fixed and sticky
+    */
+    top:0;/**most important*/
+    left:0;
+    right:0;
+    bottom:0;/** Prevent item from 
+    going beyond the grid container*/
+    width:250px;
+    grid-row:1/2;
+    background-color:rgb(149, 185, 212);
+    gap:20px;
+
+}
+.menu-list ul{
+    list-style-type:none;
+}
+.dropdown{
+    display:none;
+}
+.button-container {
+    display:grid;
+    grid-template-columns: repeat(5,1fr);
+    grid-column:10/15;
+    place-items:center;
+}
+
+.menu-container{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    grid-column:1/5;
+    place-items:center;
+}
+.menu-container ul {
+    list-style-type:none;
+}
+.menu-continer ul li{
+    display:inline;
+
+}
+.header button{
+    border-radius:5px;
+    border-color:black;
+    background-color:black;
+    color:white;
+    overflow-wrap:none;
+}
+.out-container{
+    display:grid ;
+    grid-template-columns:repeat(3,1fr);
+    position:relative;
+}
+
+
+.sidebar{
+    padding:20px;
+    text-size-adjust:20px;
+    
+    width:200px;
+    background-color:crimson;
+    margin:2px;
+    
+}
+.sidebar ul{
+    list-style-type:none;
+}
+.text-container{
+    height:100vw;
+    width:100%;
+    background-color: blanchedalmond;
+    border:2px;
+    border-style:solid;
+    border-color:#000000;
+    grid-column:span 2;
+}
+
+.footer{
+    background-color:aqua;
+    color:black;
+}
+@media screen  {
+
+}

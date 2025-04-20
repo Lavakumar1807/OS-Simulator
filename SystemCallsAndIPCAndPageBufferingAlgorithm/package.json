@@ -11,10 +11,15 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+<<<<<<< HEAD:SystemCallsAndIPC/package.json
   "description": "npm init -y",
   "dependencies": {
     "cors": "^2.8.5",
     "exec": "^0.2.1",
+=======
+  "description": "",
+  "dependencies": {
+>>>>>>> 8a1e40ff4278c6d537193bb2e58ef811679e5894:SystemCallsAndIPCAndPageBufferingAlgorithm/package.json
     "express": "^5.1.0",
     "fs": "^0.0.1-security"
   },
