@@ -1,96 +1,221 @@
+/* Base Styles */
+:root {
+    --primary-color: #00c6ff;
+    --secondary-color: #0088d1;
+    --accent-color: #64dfff;
+    --dark-bg: #121212;
+    --card-bg: #1e1e1e;
+    --text-primary: #ffffff;
+    --text-secondary: #c2cade;
+    --success-color: #4ade80;
+    --warning-color: #fbbf24;
+    --danger-color: #f87171;
+    --border-radius: 8px;
+    --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    --transition-speed: 0.3s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #422c23;
-    color: white;
-    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--dark-bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+    transition: color var(--transition-speed);
+}
+
+a:hover {
+    color: var(--accent-color);
+}
+
+
+.particle-background {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+
+.navbar {
+    background-color: rgba(10, 15, 25, 0.9);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.nav-container {
     display: flex;
-    flex-wrap: wrap;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 25px; 
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.logo i {
+    margin-right: 8px;
+    font-size: 1.8rem;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: var(--text-secondary);
+    padding: 8px 12px;
+    border-radius: var(--border-radius);
+    transition: all var(--transition-speed);
+    display: flex;
+    align-items: center;
+}
+
+.nav-links a i {
+    margin-right: 6px;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.nav-links a.active {
+    color: var(--accent-color);
+}
+
+.nav-toggle {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-primary);
+}
+
+/* Simulation */
+.simulation {
+    width: 80%;
 }
 
 .panel {
-    background-color: beige;
+    background-color: #1a202c;
     border-radius: 8px;
     padding: 15px;
     margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     flex: 1;
     min-width: 300px;
     margin: 10px;
-    color: black;
+    color: #e2e8f0;
 }
 
 .process, .resource {
     display: inline-block;
     padding: 10px;
     margin: 10px;
-    border: 2px solid black;
+    border: 2px solid #ccc;
     border-radius: 5px;
 }
 
-.allocated { background-color: lightcoral; }
-.requested { background-color: lightyellow; border: 2px dashed orange; }
-.available { background-color: lightgreen; }
+.allocated { background-color: #f87171; }
+.requested { background-color: #fbbf24; border: 2px dashed #d97706; } 
+.available { background-color: #4ade80; } 
 
 input, select {
     margin: 5px;
     padding: 8px;
     border-radius: 4px;
-    border: 1px solid #ccc;
+    border: 1px solid #4b5563;
+    background-color: #2d3748;
+    color: #e2e8f0;
 }
 
 button {
-    background-color: green;
+    background-color: #3b82f6; 
     color: white;
     padding: 8px 15px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     margin: 5px;
+    transition: background-color 0.2s;
 }
 
 button:hover {
-    background-color: darkgreen;
+    background-color: #2563eb; 
 }
 
 table {
     border-collapse: collapse;
     width: 100%;
     margin: 15px 0;
-    background-color: beige;
-    color: black;
-    border: 1px solid black;
+    background-color: #1e293b; 
+    color: #e2e8f0;
+    border: 1px solid #334155;
 }
 
 th, td {
-    border: 1.5px solid black;
+    border: 1.5px solid #334155;
     padding: 10px;
     text-align: center;
 }
 
 th {
-    background-color: #e0cda9;
+    background-color: #0f172a; 
     font-weight: bold;
+    color: #ffffff;
+}
+
+
+table td:first-child {
+    font-weight: bold;
+    background-color: #1e3a5f;
 }
 
 canvas {
-    border: 1.5px solid black;
-    background-color: white;
+    border: 1.5px solid #475569;
+    background-color: #2d3748;
     margin-top: 15px;
     max-width: 100%;
 }
 
-
 h1 {
-    color: dark beige; 
+    color: #00c6ff; 
     text-align: center;
     margin-bottom: 20px;
     margin-top: 25px;
@@ -98,32 +223,28 @@ h1 {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-
 h2 {
-    color: #00BFFF; 
+    color: #64dfff; 
     text-align: center;
     margin-bottom: 15px;
     margin-top: 25px;
     font-size: 24px;
 }
 
-
 h3 {
-    color: #32CD32;
+    color: #0088d1; 
     text-align: center;
     margin-bottom: 15px;
     margin-top: 25px;
     font-size: 20px;
 }
 
-
 h4, h5, h6 {
-    color: #FF8C00; 
+    color: #38bdf8; 
     text-align: center;
     margin-bottom: 15px;
     margin-top: 20px;
 }
-
 
 .panel > h2:first-child,
 .panel > h3:first-child {
@@ -131,36 +252,33 @@ h4, h5, h6 {
 }
 
 .panel h1, .panel h2, .panel h3, .panel h4, .panel h5, .panel h6 {
-    color: inherit; 
+    color: inherit;
 }
 
-
 .status-safe {
-    color: #008000;
+    color: #166534; 
     font-weight: bold;
-    background-color: #CCFFCC; 
+    background-color: #bbf7d0; 
     padding: 3px 6px;
     border-radius: 3px;
 }
 
 .status-unsafe {
-    color: #FF0000; 
+    color: #b91c1c; 
     font-weight: bold;
-    background-color: #FFCCCC; 
+    background-color: #fee2e2; 
     padding: 3px 6px;
     border-radius: 3px;
 }
 
-
 .safe-sequence {
-    color: #0000CD; 
+    color: #2563eb; 
     font-weight: bold;
 }
 
-
 table td:first-child {
     font-weight: bold;
-    background-color: #e0cda9;
+    background-color: #1e293b;
 }
 
 .result-box {
@@ -168,21 +286,20 @@ table td:first-child {
     margin-top: 20px;
     margin-bottom: 20px;
     border-radius: 4px;
-    background-color: #FFFACD; 
+    background-color: #172554; 
     min-height: 40px;
-    border: 1.5px solid #DAA520; 
-    color: black;
+    border: 1.5px solid #3b82f6; 
+    color: #e2e8f0;
 }
 
-
 .result-box strong {
-    color: #8B0000; 
+    color: #f87171; 
 }
 
 .tab {
     overflow: hidden;
-    border: 1.5px solid black;
-    background-color: #f1f1f1;
+    border: 1.5px solid #334155;
+    background-color: #1e293b; 
     border-radius: 5px 5px 0 0;
 }
 
@@ -194,48 +311,45 @@ table td:first-child {
     cursor: pointer;
     padding: 10px 16px;
     transition: 0.3s;
-    color: black;
+    color: #e2e8f0;
 }
 
 .tab button:hover {
-    background-color: #ddd;
+    background-color: #334155; 
 }
 
 .tab button.active {
-    background-color: #006400; 
+    background-color: #3b82f6; 
     color: white;
 }
 
 .tabcontent {
     display: none;
     padding: 15px;
-    border: 1.5px solid black;
+    border: 1.5px solid #334155;
     border-top: none;
     border-radius: 0 0 5px 5px;
     animation: fadeEffect 1s;
-    background-color: beige;
-    color: black;
+    background-color: #1a202c;
+    color: #e2e8f0;
 }
-
 
 label {
     font-weight: bold;
 }
-
 
 label[for="numResources"],
 label[for="numProcesses"],
 label[for="bankerProcess"],
 label[for="requestProcess"],
 label[for="preventionProcess"] {
-    color: black;
+    color: #c2cade;
 }
 
 @keyframes fadeEffect {
     from { opacity: 0; }
     to { opacity: 1; }
 }
-
 
 @media screen and (max-width: 768px) {
     .container {
@@ -256,24 +370,21 @@ label[for="preventionProcess"] {
     }
 }
 
-
 .container > div {
     margin-bottom: 30px;
 }
 
-#availableResources,
-#allocationTable,
-#maxClaimTable,
-#needTable,
-#availableTable,
-#detectionAllocationTable,
-#requestTable,
-#resourceOrderingTable,
-#processHoldingsTable {
-    margin-bottom: 30px;
-    margin-top: 20px;
+#availableResources th,
+#allocationTable th,
+#maxClaimTable th,
+#needTable th,
+#availableTable th,
+#detectionAllocationTable th,
+#requestTable th,
+#resourceOrderingTable th,
+#processHoldingsTable th {
+    background-color: #0f172a; 
 }
-
 
 #allocationTable + div,
 #maxClaimTable + div,
@@ -282,35 +393,29 @@ label[for="preventionProcess"] {
     margin-top: 30px;
 }
 
-
 h3 + button,
 h3 + div > button {
     margin-top: 15px;
 }
-
 
 #detection .container > div,
 #prevention .container > div {
     margin-bottom: 30px;
 }
 
-
 label + select,
 label + input {
     margin-left: 10px;
 }
-
 
 div > label:first-child {
     margin-top: 15px;
     display: inline-block;
 }
 
-
 .container h3 {
     margin-top: 30px;
 }
-
 
 #maxClaimTable + h4,
 #needTable + h4 {

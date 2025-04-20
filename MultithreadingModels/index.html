@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multithreading Models Emulator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+<body>
+    <!-- Particle Background -->
+    <div class="particle-background" id="particles-js"></div>
+    
+    <!-- Navigation Bar (New) -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <i class="fas fa-microchip"></i>
+                <span>OSphere</span>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html" class="active"><i class="fas fa-home"></i> Home</a>
+                <a href="../collaborators.html"><i class="fa-solid fa-user-group"></i>Collaborators</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Multithreading Models Emulator</h1>
+        <div class="controls">
+            <div class="control-group">
+                <label for="model-select">Select Threading Model:</label>
+                <select id="model-select">
+                    <option value="one-to-one">One-to-One Model</option>
+                     
+                    <option value="many-to-many">Many-to-Many Model</option>
+                    <option value="many-to-one">Many-to-One Model</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="thread-count">Number of Threads:</label>
+                <input type="range" id="thread-count" min="1" max="10" value="4">
+                <span id="thread-count-value">4</span>
+            </div>
+            <div class="control-group">
+                <label for="task-complexity">Task Complexity:</label>
+                <input type="range" id="task-complexity" min="1" max="10" value="5">
+                <span id="task-complexity-value">5</span>
+            </div>
+            <button id="start-btn">Start Simulation</button>
+            <button id="stop-btn" disabled>Stop Simulation</button>
+        </div>
+
+        <div class="simulation-area">
+            <div class="model-info">
+                <h2 id="current-model">One-to-One Model</h2>
+                <p id="model-description">In this model, each user thread is mapped to a corresponding kernel thread.</p>
+            </div>
+            
+            <div class="emulation-container">
+                <div class="threads-container">
+                    <div class="user-threads">
+                        <h3>User Threads</h3>
+                        <div id="user-threads-display" class="thread-display"></div>
+                    </div>
+                    <div class="kernel-threads">
+                        <h3>Kernel Threads</h3>
+                        <div id="kernel-threads-display" class="thread-display"></div>
+                    </div>
+                </div>
+                <div class="cpu-container">
+                    <h3>CPU Cores</h3>
+                    <div id="cpu-cores-display" class="cpu-display"></div>
+                </div>
+            </div>
+
+            <div class="metrics">
+                <div class="metric">
+                    <span>Throughput:</span>
+                    <span id="throughput">0 tasks/sec</span>
+                </div>
+                <div class="metric">
+                    <span>Average Latency:</span>
+                    <span id="latency">0 ms</span>
+                </div>
+                <div class="metric">
+                    <span>CPU Utilization:</span>
+                    <span id="utilization">0%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="explanation">
+            <h2>Multithreading Models Explained</h2>
+            <div class="model-explanation">
+                <h3>One-to-One Model</h3>
+                <p>Maps each user thread to a kernel thread. Provides more concurrency and takes advantage of multiple processors. However, creating a kernel thread for each user thread can burden the system if the application creates too many threads.</p>
+            </div>
+            <div class="model-explanation">
+                <h3>Many-to-One Model</h3>
+                <p>Maps many user-level threads to a single kernel thread. Thread management is done in user space, so it's efficient, but the entire process will block if a thread makes a blocking system call. Also, it cannot take advantage of multiple processors.</p>
+            </div>
+             
+            <div class="model-explanation">
+                <h3>Many-to-Many Model</h3>
+                <p>Multiplexes many user-level threads to a smaller or equal number of kernel threads. This model provides the best of both worlds: it allows for creating as many user threads as necessary while providing true parallelism by distributing them over multiple processors.</p>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        // Particles.js configuration (same as your original)
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#00b4d8"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#00b4d8",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+
+        // Mobile Menu Toggle
+        document.getElementById('navToggle').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('show');
+        });
+
+        // Filter buttons
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+                // You would add actual filtering logic here
+            });
+        });
+    </script>
+</body>
+</html>

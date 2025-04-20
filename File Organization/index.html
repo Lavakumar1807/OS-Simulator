@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terminal File Organization Simulator</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+<body>
+  <!-- Particle Background -->
+  <div class="particle-background" id="particles-js"></div>
+    
+  <!-- Navigation Bar (New) -->
+  <nav class="navbar">
+      <div class="container nav-container">
+          <div class="logo">
+              <i class="fas fa-microchip"></i>
+              <span>OSphere</span>
+          </div>
+          <div class="nav-links">
+              <a href="../index.html" class="active"><i class="fas fa-home"></i> Home</a>
+              <a href="../collaborators.html"><i class="fa-solid fa-user-group"></i>Collaborators</a>
+          </div>
+      </div>
+  </nav>
+
+  <div class="simulation-container">
+    <div class="header">
+      <h1>💻 Terminal File Organization Simulator</h1>
+    </div>
+    
+    <div class="description">
+      <p>Welcome to the simulator! Practice organizing your project files using terminal commands in a neon-themed terminal.</p>
+      <p>Try commands like <code>mkdir</code>, <code>cd</code>, <code>touch</code>, <code>tree</code>, and more.</p>
+    </div>
+
+    <div class="terminal-window">
+      <div class="terminal-bar">
+        <div class="terminal-buttons">
+          <span class="terminal-button close"></span>
+          <span class="terminal-button minimize"></span>
+          <span class="terminal-button maximize"></span>
+        </div>
+        <div class="terminal-title">user@machine: ~/home</div>
+      </div>
+      
+      <div class="terminal" id="terminal">
+        <div class="terminal-content" id="terminalContent">
+          <!-- Sample initial command -->
+          <div class="command-line">
+            <span class="prompt">user@machine:</span>
+            <span class="current-path">~/home</span>
+            <span class="dollar"> $</span>
+            <span class="command-input"> ls</span>
+          </div>
+          <div class="result">index.html  styles.css  script.js</div>
+        </div>
+
+        <!-- Input -->
+        <div class="input-container">
+          <span class="prompt" id="promptUsername">user@machine:</span>
+          <span class="current-path" id="currentPath">~/home</span>
+          <span class="dollar">$</span>
+          <input type="text" id="commandInput" autofocus placeholder="Type your command...">
+        </div>
+      </div>
+    </div>
+
+    <div class="command-help">
+      <h3>Available Commands</h3>
+      <div class="help-grid">
+        <span class="command-name">cd [directory]</span><span>Change directory</span>
+        <span class="command-name">cd ..</span><span>Go up one directory</span>
+        <span class="command-name">mkdir [name]</span><span>Create a new directory</span>
+        <span class="command-name">rm [file/directory]</span><span>Remove a file or directory</span>
+        <span class="command-name">touch [name]</span><span>Create a new file</span>
+        <span class="command-name">tree</span><span>Display directory structure</span>
+        <span class="command-name">mv [src] [dest]</span><span>Move files or directories</span>
+        <span class="command-name">clear</span><span>Clear the terminal screen</span>
+        <span class="command-name">hist</span><span>Show command history</span>
+        <span class="command-name">ls</span><span>List directory contents</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+  <script>
+      // Particles.js configuration (same as your original)
+      particlesJS("particles-js", {
+          "particles": {
+              "number": {
+                  "value": 80,
+                  "density": {
+                      "enable": true,
+                      "value_area": 800
+                  }
+              },
+              "color": {
+                  "value": "#00b4d8"
+              },
+              "shape": {
+                  "type": "circle",
+                  "stroke": {
+                      "width": 0,
+                      "color": "#000000"
+                  },
+                  "polygon": {
+                      "nb_sides": 5
+                  }
+              },
+              "opacity": {
+                  "value": 0.5,
+                  "random": false,
+                  "anim": {
+                      "enable": false,
+                      "speed": 1,
+                      "opacity_min": 0.1,
+                      "sync": false
+                  }
+              },
+              "size": {
+                  "value": 3,
+                  "random": true,
+                  "anim": {
+                      "enable": false,
+                      "speed": 40,
+                      "size_min": 0.1,
+                      "sync": false
+                  }
+              },
+              "line_linked": {
+                  "enable": true,
+                  "distance": 150,
+                  "color": "#00b4d8",
+                  "opacity": 0.2,
+                  "width": 1
+              },
+              "move": {
+                  "enable": true,
+                  "speed": 2,
+                  "direction": "none",
+                  "random": false,
+                  "straight": false,
+                  "out_mode": "out",
+                  "bounce": false,
+                  "attract": {
+                      "enable": false,
+                      "rotateX": 600,
+                      "rotateY": 1200
+                  }
+              }
+          },
+          "interactivity": {
+              "detect_on": "canvas",
+              "events": {
+                  "onhover": {
+                      "enable": true,
+                      "mode": "grab"
+                  },
+                  "onclick": {
+                      "enable": true,
+                      "mode": "push"
+                  },
+                  "resize": true
+              },
+              "modes": {
+                  "grab": {
+                      "distance": 140,
+                      "line_linked": {
+                          "opacity": 1
+                      }
+                  },
+                  "bubble": {
+                      "distance": 400,
+                      "size": 40,
+                      "duration": 2,
+                      "opacity": 8,
+                      "speed": 3
+                  },
+                  "repulse": {
+                      "distance": 200,
+                      "duration": 0.4
+                  },
+                  "push": {
+                      "particles_nb": 4
+                  },
+                  "remove": {
+                      "particles_nb": 2
+                  }
+              }
+          },
+          "retina_detect": true
+      });
+  </script>
+</body>
+</html>

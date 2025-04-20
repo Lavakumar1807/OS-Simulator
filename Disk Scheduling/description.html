@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Disk Scheduling Algorithm Descriptions</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+         :root {
+            --primary-color: #00d4ff;
+            /* Neon blue */
+            --primary-light: #80e0ff;
+            /* Light neon blue */
+            --header-color: #80e0ff;
+            --background: #121212;
+            /* Dark background */
+            --text-color: #e4e4e7;
+            /* Light text color */
+            --card-bg: #181818;
+            /* Dark cards */
+            --border-color: #00d4ff;
+            /* Neon blue border */
+        }
+        /* Base Styles */
+        :root {
+            --primary-color: #00b4d8;
+            --secondary-color: #0077b6;
+            --accent-color: #48cae4;
+            --dark-bg: #121212;
+            --card-bg: #1e1e1e;
+            --text-primary: #f8f9fa;
+            --text-secondary: #adb5bd;
+            --success-color: #4caf50;
+            --warning-color: #ff9800;
+            --danger-color: #f44336;
+            --border-radius: 8px;
+            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: color var(--transition-speed);
+        }
+
+        a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Particle Background */
+        .particle-background {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: rgba(20, 20, 20, 0.9);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .logo i {
+            margin-right: 8px;
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            border-radius: var(--border-radius);
+            transition: all var(--transition-speed);
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links a i {
+            margin-right: 6px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--text-primary);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-links a.active {
+            color: var(--primary-color);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 40px;
+        }
+        
+        .algo-section {
+            background-color: var(--card-bg);
+            border-left: 6px solid var(--primary-light);
+            padding: 20px;
+            margin: 30px auto;
+            max-width: 800px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .algo-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 12px;
+        }
+        
+        .algo-section h3 {
+            margin-top: 18px;
+            font-size: 1.1rem;
+            color: var(--header-color);
+        }
+        
+        ul {
+            margin-left: 20px;
+        }
+        
+        p {
+            margin-top: 10px;
+            background: #2c2c2e;
+            /* Dark background for text */
+            padding: 10px 15px;
+            border-left: 4px solid var(--primary-color);
+            border-radius: 8px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+      <!-- Particle Background -->
+      <div class="particle-background" id="particles-js"></div>
+    
+      <!-- Navigation Bar (New) -->
+      <nav class="navbar">
+          <div class="container nav-container">
+              <div class="logo">
+                  <i class="fas fa-microchip"></i>
+                  <span>OSphere</span>
+              </div>
+              <div class="nav-links">
+                  <a href="../index.html" class="active"><i class="fas fa-home"></i> Home</a>
+                  <a href="../collaborators.html"><i class="fa-solid fa-user-group"></i>Collaborators</a>
+              </div>
+          </div>
+      </nav>
+
+    <h1>Disk Scheduling Algorithms - Overview</h1>
+
+    <div class="algo-section">
+        <h2>1. FCFS (First Come First Serve)</h2>
+        <h3>How it Works:</h3>
+        <p>In the First Come First Serve (FCFS) algorithm, requests are processed in the order they arrive in the queue. The disk head moves to the location of the requested track and services the request before moving to the next one. No optimization is
+            done on the track order.</p>
+        <h3>Key Observations:</h3>
+        <ul>
+            <li>Simple implementation.</li>
+            <li>Requests are served in the order of their arrival.</li>
+            <li>No prioritization of requests based on proximity.</li>
+        </ul>
+        <h3>Advantages:</h3>
+        <ul>
+            <li>Easy to implement and understand.</li>
+            <li>Fair for all requests as they are processed in the order they arrive.</li>
+        </ul>
+        <h3>Disadvantages:</h3>
+        <ul>
+            <li>May lead to long average seek times, especially if requests are scattered.</li>
+            <li>Can cause significant delays due to the lack of head movement optimization.</li>
+        </ul>
+        <h3>Example:</h3>
+        <p>Requests: 98, 183, 37, 122<br>Served in order: 98 → 183 → 37 → 122</p>
+    </div>
+
+    <div class="algo-section">
+        <h2>2. SSTF (Shortest Seek Time First)</h2>
+        <h3>How it Works:</h3>
+        <p>The Shortest Seek Time First (SSTF) algorithm selects the disk request that is closest to the current head position. This minimizes the seek time for each request, as the head moves only a short distance before serving the next request.</p>
+        <h3>Key Observations:</h3>
+        <ul>
+            <li>Dynamic selection based on the proximity of requests to the current head.</li>
+            <li>Minimizes seek time by reducing movement for each request.</li>
+        </ul>
+        <h3>Advantages:</h3>
+        <ul>
+            <li>Better performance than FCFS with a reduced average seek time.</li>
+            <li>Reduces the total time for servicing requests.</li>
+        </ul>
+        <h3>Disadvantages:</h3>
+        <ul>
+            <li>May cause starvation for requests that are far from the head.</li>
+            <li>More complex to implement than FCFS.</li>
+        </ul>
+        <h3>Example:</h3>
+        <p>Head at 50, Requests: 98, 183, 37, 122<br>Served based on proximity: 37 → 98 → 122 → 183</p>
+    </div>
+
+    <div class="algo-section">
+        <h2>3. SCAN</h2>
+        <h3>How it Works:</h3>
+        <p>The SCAN algorithm, also known as the elevator algorithm, moves the disk head in one direction, servicing requests along the way. Once it reaches the end of the disk, it reverses and services requests in the opposite direction. The head serves
+            all requests along its path before reversing.</p>
+        <h3>Key Observations:</h3>
+        <ul>
+            <li>Head moves in one direction and reverses after reaching the end.</li>
+            <li>Requests are serviced in one sweep from one end to the other.</li>
+        </ul>
+        <h3>Advantages:</h3>
+        <ul>
+            <li>Improved throughput compared to FCFS and SSTF.</li>
+            <li>Prevents starvation since all requests are serviced in each sweep.</li>
+        </ul>
+        <h3>Disadvantages:</h3>
+        <ul>
+            <li>Longer seek times for edge requests.</li>
+            <li>Unfair to requests near the ends of the disk.</li>
+        </ul>
+        <h3>Example:</h3>
+        <p>Head at 50, Direction: increasing<br>Requests: 37, 98, 122, 183 → Served: 98 → 122 → 183, then reverses</p>
+    </div>
+
+    <div class="algo-section">
+        <h2>4. LOOK</h2>
+        <h3>How it Works:</h3>
+        <p>The LOOK algorithm is a variant of SCAN where the head moves only as far as the last request in its direction before reversing. The head does not continue to the end of the disk if there are no requests, reducing unnecessary travel.</p>
+        <h3>Key Observations:</h3>
+        <ul>
+            <li>Head moves to the last requested track in the current direction before reversing.</li>
+            <li>Reduces unnecessary movement compared to SCAN.</li>
+        </ul>
+        <h3>Advantages:</h3>
+        <ul>
+            <li>Faster than SCAN due to reduced movement.</li>
+            <li>Improves response time by serving the last requests in each direction.</li>
+        </ul>
+        <h3>Disadvantages:</h3>
+        <ul>
+            <li>Still may lead to edge delays if requests are near the end.</li>
+            <li>Can be more complex to manage than SCAN.</li>
+        </ul>
+        <h3>Example:</h3>
+        <p>Requests: 37, 98, 122, 183<br>Head moves to last request in direction (183) then reverses without going to disk end</p>
+    </div>
+
+    <div class="algo-section">
+        <h2>5. C-SCAN (Circular SCAN)</h2>
+        <h3>How it Works:</h3>
+        <p>The Circular SCAN (C-SCAN) algorithm moves the head in one direction only. When it reaches the end of the disk, it jumps back to the beginning and continues servicing requests. This ensures that all requests are treated fairly and no request is
+            starved.
+        </p>
+        <h3>Key Observations:</h3>
+        <ul>
+            <li>Head moves in one direction and wraps around after reaching the end.</li>
+            <li>Provides a uniform wait time for all requests.</li>
+        </ul>
+        <h3>Advantages:</h3>
+        <ul>
+            <li>Improved fairness for all requests.</li>
+            <li>Uniform wait time across all requests.</li>
+        </ul>
+        <h3>Disadvantages:</h3>
+        <ul>
+            <li>Extra movement when the head jumps back to the start.</li>
+            <li>Can be inefficient if there aren’t enough requests.</li>
+        </ul>
+        <h3>Example:</h3>
+        <p>Head moves 98 → 122 → 183 → Jump → 37</p>
+    </div>
+
+    <div class="algo-section">
+        <h2>6. C-LOOK (Circular LOOK)</h2>
+        <h3>How it Works:</h3>
+        <p>C-LOOK is an optimized version of C-SCAN. It moves the head only as far as the last request in its current direction before jumping to the farthest request in the opposite direction, reducing unnecessary traversal.</p>
+        <h3>Key Observations:</h3>
+        <ul>
+            <li>Head moves to the last request in the current direction, then jumps to the farthest in the opposite direction.</li>
+            <li>Minimizes the unnecessary traversal of empty tracks.</li>
+        </ul>
+        <h3>Advantages:</h3>
+        <ul>
+            <li>Improved performance and reduced seek time compared to C-SCAN.</li>
+            <li>Fairness and efficient disk usage with less traversal.</li>
+        </ul>
+        <h3>Disadvantages:</h3>
+        <ul>
+            <li>Complex logic for direction and jump handling.</li>
+            <li>Not always intuitive for beginners.</li>
+        </ul>
+        <h3>Example:</h3>
+        <p>Head at 50 → goes to 183 → jumps to 37 → continues forward</p>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Particles.js configuration (same as your original)
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#00b4d8"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#00b4d8",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+    </script>
+</body>
+
+</html>

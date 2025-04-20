@@ -1,0 +1,344 @@
+/* Base Styles */
+:root {
+    --primary-color: #00b4d8;
+    --secondary-color: #0077b6;
+    --accent-color: #48cae4;
+    --dark-bg: #121212;
+    --card-bg: #1e1e1e;
+    --text-primary: #f8f9fa;
+    --text-secondary: #adb5bd;
+    --text-highlight: white;
+    --success-color: #4caf50;
+    --warning-color: #ff9800;
+    --danger-color: #f44336;
+    --border-radius: 8px;
+    --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    --transition-speed: 0.3s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--dark-bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Links */
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+    transition: color var(--transition-speed);
+}
+
+a:hover {
+    color: var(--accent-color);
+}
+
+/* Particle Background */
+.particle-background {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+/* Navbar */
+.navbar {
+    background-color: rgba(20, 20, 20, 0.95);
+    backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.logo i {
+    margin-right: 8px;
+    font-size: 1.8rem;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: var(--text-secondary);
+    padding: 8px 12px;
+    border-radius: var(--border-radius);
+    transition: all var(--transition-speed);
+    display: flex;
+    align-items: center;
+}
+
+.nav-links a i {
+    margin-right: 6px;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.nav-links a.active {
+    color: var(--primary-color);
+}
+
+/* Controls & Inputs */
+.controls {
+    background-color: var(--card-bg);
+    color: var(--text-secondary);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 200px;
+}
+
+label {
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: var(--text-highlight);
+}
+
+select, input {
+    padding: 8px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    background-color: #2c2c2c;
+    color: var(--text-primary);
+}
+
+input[type="range"] {
+    width: 100%;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: var(--secondary-color);
+}
+
+button:disabled {
+    background-color: #444;
+    color: #888;
+    cursor: not-allowed;
+}
+
+/* Simulation Section */
+.simulation-area {
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: var(--card-shadow);
+}
+
+.model-info {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #333;
+    color: var(--text-highlight);
+}
+
+/* Emulation Area */
+.emulation-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.threads-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.user-threads,
+.kernel-threads {
+    flex: 1;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 15px;
+    background-color: #181818;
+}
+
+/* Threads & CPU */
+.thread-display,
+.cpu-display {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.thread,
+.cpu-core {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    position: relative;
+}
+
+.user-thread {
+    background-color: #3498db;
+}
+
+.kernel-thread {
+    background-color: #e74c3c;
+}
+
+.cpu-core {
+    background-color: #2ecc71;
+    width: 100px;
+    height: 100px;
+}
+
+.thread-idle {
+    opacity: 0.5;
+}
+
+.thread-active {
+    opacity: 1;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(52, 152, 219, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
+    }
+}
+
+.thread-task {
+    position: absolute;
+    bottom: -10px;
+    font-size: 12px;
+    color: #000;
+    background-color: #f1c40f;
+    padding: 2px 6px;
+    border-radius: 10px;
+}
+
+/* Metrics */
+.metrics {
+    display: flex;
+    justify-content: space-around;
+    background-color: #181818;
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 20px;
+}
+
+.metric {
+    text-align: center;
+    color: var(--text-highlight);
+}
+
+.metric span:first-child {
+    font-weight: 600;
+    margin-right: 5px;
+    color: var(--accent-color);
+}
+
+/* Explanation */
+.explanation {
+    margin-top: 40px;
+}
+
+.model-explanation {
+    background-color: #212121;
+    color: var(--text-secondary);
+    padding: 15px;
+    border-radius: var(--border-radius);
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.thread-connection {
+    position: absolute;
+    background-color: #95a5a6;
+    height: 2px;
+    z-index: -1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .threads-container {
+        flex-direction: column;
+    }
+
+    .metrics {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .control-group {
+        min-width: 100%;
+    }
+}

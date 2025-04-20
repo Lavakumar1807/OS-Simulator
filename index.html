@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operating Systems Concepts - Dark Theme</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+<body>
+    <!-- Particle Background -->
+    <div class="particle-background" id="particles-js"></div>
+    
+    <!-- Navigation Bar (New) -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <i class="fas fa-microchip"></i>
+                <span>OSphere</span>
+            </div>
+            <div class="nav-links">
+                <a href="./index.html" class="active"><i class="fas fa-home"></i> Home</a>
+                <a href="./collaborators.html"><i class="fa-solid fa-user-group"></i>Collaborators</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <h1>Operating Systems</h1>
+            <p>Explore the fundamental concepts that power modern computing</p>
+            
+            <!-- Search Box (New) -->
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" placeholder="Search for topics, concepts...">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+        <!-- Topic Grid - Same as before -->
+        <div class="topic-grid">
+            <div class="topic-card">
+                <div class="card-content">
+                    <div class="icon-container">
+                        <i class="fas fa-terminal"></i>
+                    </div>
+                    <h2>System Calls & File Operations</h2>
+                    <p>Interface between user programs and OS services.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="./SystemCallsAndIPC/views/functioncalls.html" ><button class="card-btn">Explore</button></a>
+                </div>
+            </div>
+
+            <div class="topic-card">
+                <div class="card-content">
+                    <div class="icon-container">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h2>Client-Server Communication</h2>
+                    <p>Models and protocols for distributed systems.Includes Shared memory , Message Passing methods .</p>
+                </div>
+                <div class="card-footer">
+                    <a href="Inter and Intra Process/home.html" ><button class="card-btn">Explore</button></a>
+                </div>
+            </div>
+
+            <div class="topic-card">
+                <div class="card-content">
+                    <div class="icon-container">
+                        <i class="fas fa-code-branch"></i>
+                    </div>
+                    <h2>Multithreading Models</h2>
+                    <p>Many-to-Many, Many-to-One, One-to-One threading paradigms.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="MultithreadingModels/index.html" ><button class="card-btn">Explore</button></a>
+                </div>
+            </div>
+
+            <div class="topic-card">
+                <div class="card-content">
+                  <div class="icon-container">
+                    <i class="fa-solid fa-shield"></i>
+                  </div>
+                  <h2>Critical Section</h2>
+                  <p>Includes Peterson's Solution, Test-and-Set, Binary Semaphore, Mutex</p>
+                </div>
+                <div class="card-footer">
+                  <a href="Critical section/"><button class="card-btn">Explore</button></a>
+                </div>
+              </div>   
+
+            <div class="topic-card">
+                <div class="card-content">
+                  <div class="icon-container">
+                    <i class="fas fa-lock"></i>
+                  </div>
+                  <h2>Process Synchronization</h2>
+                  <p>Coordination mechanisms for concurrent processes. Includes Producer-Consumer Problem, Reader-Writer Problem, Dining Philosopher.</p>
+                </div>
+                <div class="card-footer">
+                  <a href="ProcessSynchronization/index.html"><button class="card-btn">Explore</button></a>
+                </div>
+              </div>              
+
+            <div class="topic-card">
+                <div class="card-content">
+                    <div class="icon-container">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <h2>CPU Scheduling Algorithms</h2>
+                    <p>Optimizing processor time allocation.Includes First-Come-First-Serve (FCFS), Shortest Job First (SJF),Round Robin , Priority Scheduling</p>
+                </div>
+                <div class="card-footer">
+                    <a href="CPU scheduling/scheduling.html" ><button class="card-btn">Explore</button></a>
+                </div>
+            </div>
+
+            <div class="topic-card">
+                <div class="card-content">
+                    <div class="icon-container">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <h2>Real-Time CPU Scheduling (RTOS)</h2>
+                    <p>Includes Earliest Deadline First (EDF), Rate-Monotonic Scheduling (RMS)</p>
+                </div>
+                <div class="card-footer">
+                    <a href="RTOS_SchedulingAlgos/index.html" ><button class="card-btn">Explore</button></a>
+                </div>
+            </div>
+
+            <div class="topic-card">
+                <div class="card-content">
+                    <div class="icon-container">
+                        <i class="fas fa-ban"></i>
+                    </div>
+                    <h2>Deadlocks</h2>
+                    <p>Deadlock Avoidance , Deadlock Prevention and Deadlock Detection .</p>
+                </div>
+                <div class="card-footer">
+                    <a href="Deadlock/index.html" ><button class="card-btn">Explore</button></a>
+                </div>
+            </div>
+
+            <div class="topic-card">
+                <div class="card-content">
+                    <div class="icon-container">
+                        <i class="fas fa-memory"></i>
+                    </div>
+                    <h2>Memory Management</h2>
+                    <p>MFT (Multiprogramming with a Fixed number of Tasks), MVT (Multiprogramming with a Variable number of Tasks).</p>
+                </div>
+                <div class="card-footer">
+                    <a href="MemoryManagement/index.html" ><button class="card-btn">Explore</button></a>
+                </div>
+            </div>
+
+            <div class="topic-card">
+                <div class="card-content">
+                    <div class="icon-container">
+                        <i class="fas fa-memory"></i>
+                    </div>
+                    <h2>Contiguous Memory Allocation</h2>
+                    <p>First Fit, Best Fit, Worst Fit, Next Fit</p>
+                </div>
+                <div class="card-footer">
+                    <a href="ContiguousMemoryAllocation/index.html" ><button class="card-btn">Explore</button></a>
+                </div>
+            </div>
+
+            <div class="topic-card">
+                <div class="card-content">
+                    <div class="icon-container">
+                        <i class="fas fa-puzzle-piece"></i>
+                    </div>
+                    <h2>Segmentation</h2>
+                    <p>Dividing memory into variable-sized segments.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="./Segmentation/index.html" ><button class="card-btn">Explore</button></a>
+                </div>
+            </div>
+
+            <div class="topic-card">
+                <div class="card-content">
+                    <div class="icon-container">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <h2>Page Replacement Algorithms</h2>
+                    <p>FIFO (First-In-First-Out), Optimal, LRU (Least Recently Used), LFU (Least Frequently Used),MFU (Most Frequently Used),Optimal , Random page swapping , Second Chance (Clock) , Page Buffering, Enhanced Second Chance</p>
+                </div>
+                <div class="card-footer">
+                    <a href="./Paging/index.html" ><button class="card-btn">Explore</button></a>
+                </div>
+            </div>
+
+            <div class="topic-card">
+                <div class="card-content">
+                    <div class="icon-container">
+                        <i class="fas fa-hdd"></i>
+                    </div>
+                    <h2>Disk Scheduling Algorithms</h2>
+                    <p>FCFS, SCAN, SSTF , LOOK , C-SCAN , C-LOOK</p>
+                </div>
+                <div class="card-footer">
+                    <a href="Disk Scheduling/index.html" ><button class="card-btn">Explore</button></a>
+                </div>
+            </div>
+
+            <div class="topic-card">
+                <div class="card-content">
+                    <div class="icon-container">
+                        <i class="fas fa-folder-open"></i>
+                    </div>
+                    <h2>File Allocation Methods</h2>
+                    <p>Contiguous, Linked, and Indexed allocation.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="File Allocation/index.html" ><button class="card-btn">Explore</button></a>
+                </div>
+            </div>
+
+            
+            <div class="topic-card">
+                <div class="card-content">
+                    <div class="icon-container">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h2>File Organization</h2>
+                    <p>Structuring and managing file systems. Incluces Terminal.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="./File Organization/index.html" ><button class="card-btn">Explore</button></a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Particles.js configuration (same as your original)
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#00b4d8"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#00b4d8",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+    </script>
+</body>
+</html>

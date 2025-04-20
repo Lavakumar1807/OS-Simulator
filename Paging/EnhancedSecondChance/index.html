@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Second Chance Algorithm Visualization</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+<body>
+     <!-- Particle Background -->
+     <div class="particle-background" id="particles-js"></div>
+    
+     <!-- Navigation Bar (New) -->
+     <nav class="navbar">
+         <div class="container nav-container">
+             <div class="logo">
+                 <i class="fas fa-microchip"></i>
+                 <span>OSphere</span>
+             </div>
+             <div class="nav-links">
+                 <a href="../../index.html" class="active"><i class="fas fa-home"></i> Home</a>
+                 <a href="../../collaborators.html"><i class="fa-solid fa-user-group"></i>Collaborators</a>
+             </div>
+         </div>
+     </nav>
+
+    <div class="simulation-container">
+        <h1>Enhanced Second Chance Algorithm</h1>
+        
+        <div class="controls">
+            <div class="input-group">
+                <label for="frames">Number of Frames:</label>
+                <input type="number" id="frames" min="1" max="10" value="4">
+            </div>
+            
+            <div class="input-group">
+                <label for="reference-string">Reference String (space-separated):</label>
+                <input type="text" id="reference-string" placeholder="e.g., 1 2 3 4 1 2 5 1 2 3 4 5" value="1 2 3 4 1 2 5 1 2 3 4 5">
+            </div>
+            
+            <div class="input-group">
+                <button id="start-btn">Start Simulation</button>
+                <button id="step-btn" disabled>Next Step</button>
+                <button id="reset-btn">Reset</button>
+            </div>
+        </div>
+        
+        <div class="simulation-area">
+            <div class="frames-container">
+                <h2>Memory Frames</h2>
+                <div id="frames-display"></div>
+            </div>
+            
+            <div class="reference-container">
+                <h2>Reference String</h2>
+                <div id="reference-display"></div>
+            </div>
+        </div>
+        
+        <div class="stats-area">
+            <div class="stats">
+                <div class="stat-item">
+                    <span>Page Hits:</span>
+                    <span id="hits">0</span>
+                </div>
+                <div class="stat-item">
+                    <span>Page Faults:</span>
+                    <span id="faults">0</span>
+                </div>
+                <div class="stat-item">
+                    <span>Hit Ratio:</span>
+                    <span id="hit-ratio">0%</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="explanation">
+            <h2>How Enhanced Second Chance Algorithm Works</h2>
+            <p>The Enhanced Second Chance algorithm is a page replacement algorithm with better performance than basic FIFO or Second Chance. It considers both the reference bit (R) and the modify bit (M) to make replacement decisions.</p>
+            
+            <p>The algorithm classifies pages into four classes:</p>
+            <ol>
+                <li>(0,0) - Not referenced, not modified</li>
+                <li>(0,1) - Not referenced, modified</li>
+                <li>(1,0) - Referenced, not modified</li>
+                <li>(1,1) - Referenced, modified</li>
+            </ol>
+            
+            <p>When a page needs to be replaced, the algorithm looks for pages in the order of the classes above. It gives a "second chance" to pages that are referenced by clearing their reference bit and moving to the next page.</p>
+            
+            <p>In this visualization:</p>
+            <ul>
+                <li>R bit = 1 means the page was recently referenced</li>
+                <li>M bit = 1 means the page was modified</li>
+                <li>The hand pointer (↓) shows which frame is being considered for replacement</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Particles.js configuration (same as your original)
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#00b4d8"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#00b4d8",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Second Chance Page Replacement Algorithm</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+<body>
+    <!-- Particle Background -->
+    <div class="particle-background" id="particles-js"></div>
+    
+    <!-- Navigation Bar (New) -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <i class="fas fa-microchip"></i>
+                <span>OSphere</span>
+            </div>
+            <div class="nav-links">
+                <a href="../../index.html" class="active"><i class="fas fa-home"></i> Home</a>
+                <a href="../../collaborators.html"><i class="fa-solid fa-user-group"></i>Collaborators</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="simulation-container">
+        <h1>Second Chance Page Replacement Algorithm</h1>
+        
+        <div class="controls">
+            <div class="input-group">
+                <label for="frame-count">Number of Frames:</label>
+                <input type="number" id="frame-count" min="1" max="10" value="3">
+            </div>
+            
+            <div class="input-group">
+                <label for="reference-string">Reference String:</label>
+                <input type="text" id="reference-string" placeholder="e.g., 1,2,3,4,1,2,5,1,2,3,4,5" value="1,2,3,4,1,2,5,1,2,3,4,5">
+            </div>
+            
+            <div class="input-group">
+                <label for="speed">Animation Speed:</label>
+                <select id="speed">
+                    <option value="2000">Slow</option>
+                    <option value="1000" selected>Medium</option>
+                    <option value="500">Fast</option>
+                </select>
+            </div>
+            
+            <button id="start-btn">Start Simulation</button>
+            <button id="reset-btn">Reset</button>
+            <button id="step-btn">Step</button>
+            <button id="pause-btn" disabled>Pause</button>
+        </div>
+        
+        <div class="visualization">
+            <h2>Memory Frames</h2>
+            <div class="frames-container">
+                <div class="frames" id="frames"></div>
+                <div class="page-indicator">
+                    <div class="pointer" id="pointer">▲</div>
+                </div>
+            </div>
+            
+            <h2>Reference String</h2>
+            <div class="pages-sequence" id="pages-sequence"></div>
+            
+            <div class="stats">
+                <h2>Statistics</h2>
+                <div id="page-faults">Page Faults: 0</div>
+                <div id="hit-ratio">Hit Ratio: 0%</div>
+            </div>
+            
+            <div class="explanation">
+                <h2>Algorithm Explanation</h2>
+                <p>The Second Chance algorithm is a modification of the FIFO algorithm. When a page is to be replaced:</p>
+                <ol>
+                    <li>It checks the reference bit of the oldest page.</li>
+                    <li>If the reference bit is 0, the page is replaced.</li>
+                    <li>If the reference bit is 1, the bit is reset to 0, and the page is given a second chance by moving it to the end of the queue.</li>
+                    <li>The algorithm continues until it finds a page with a reference bit of 0.</li>
+                </ol>
+                <p><strong>Green dot</strong>: Reference bit = 1 (recently used)</p>
+                <p><strong>Red dot</strong>: Reference bit = 0 (not recently used)</p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Particles.js configuration (same as your original)
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#00b4d8"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#00b4d8",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+    </script>
+</body>
+</html>

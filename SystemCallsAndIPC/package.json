@@ -1,0 +1,24 @@
+{
+  "name": "os-assignment",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "bc": "npx tailwindcss -i ./views/css/input.css -o ./views/css/output.css --watch",
+    "buildcss": "npx tailwindcss -i ./views/css/input.css -o ./views/css/output.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "npm init -y",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "exec": "^0.2.1",
+    "express": "^5.1.0",
+    "fs": "^0.0.1-security"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}

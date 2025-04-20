@@ -141,7 +141,7 @@ FileHandlingInput.addEventListener('input', ()=>
         console.log(FileHandlingInput.scrollHeight);
     });
 fileHandling();
-
+/**
 const FileHandlingRun = document.getElementById('FileHandlingRun');
 FileHandlingRun.addEventListener('click',async ()=>{
 
@@ -150,31 +150,8 @@ FileHandlingRun.addEventListener('click',async ()=>{
     
     runProgram(FileHandlingInput , FileHandlingOutputContainer,FileHandlingOutput);
     
-    /**try{
-    const response = await  fetch('/fd', {method:'GET'} ) ;
-    const data= await response.json();
-    console.log(data);
-    if(response.ok)
-    {
-        
-        console.log('File Opened Successful');
-
-        FileHandlingOutput.value=`${data.stdout}`;
-        FileHandlingOutputContainer.appendChild(FileHandlingOutput);
-
-    }
-    else{
-        console.error('File Open Failed');
-        FileHandlingOutput.value=`${data.error}`;
-        FileHandlingOutputContainer.appendChild(FileHandlingOutput);
-
-        throw new Error(`File Open Failed ${data.error}`);
-        
-    } 
-    } catch(err){
-        console.log(`An error occured : ${err.message}`);
-    } */
-});
+   
+}); */
 
 
 
@@ -193,35 +170,42 @@ if(!FileHandleReadInput)
 else
     console.log("Created FileHandleReadInput element successfully");
 FileHandleReadInput.value=`#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <io.h>
+#include <io.h>      // for _open, _read, _close
+#include <fcntl.h>   // for _O_RDONLY
+#include <stdlib.h>  // for exit
+#include <errno.h>   // for errno
+#include <string.h>  // for strerror
 
-int main()
-{
-    int fd = _open("f.txt",O_RDONLY);
-    if(fd==-1)
-    {
-        perror("An error occured while handling file");
-        return 1;
+int main() {
+    const char *filename = "example.txt";
+    char buffer[1024];
+    int bytesRead;
+
+    // Open the file for reading
+    int fd = _open(filename, _O_RDONLY);
+    if (fd == -1) {
+        fprintf(stderr, "Error opening file: %s\n", strerror(errno));
+        exit(EXIT_FAILURE);
     }
-    char buffer[256];
-    int size = _read(fd , buffer , sizeof(buffer)-1);
-    if(size==-1)
-    {
-        perror("An error occured while reading file");
-        return 1;
+
+    // Read from the file
+    bytesRead = _read(fd, buffer, sizeof(buffer) - 1);
+    if (bytesRead == -1) {
+        fprintf(stderr, "Error reading file: %s\n", strerror(errno));
+        _close(fd);
+        exit(EXIT_FAILURE);
     }
-    buffer[size]='\0';
-    printf("Buffer : %s",buffer);
-    if(_close(fd)==-1)
-    {
-        perror("An error occured while closing the file");
-        return 1;
-    }
+
+    // Null-terminate and print buffer
+    buffer[bytesRead] = '\0';
+    printf("Read %d bytes:\n%s\n", bytesRead, buffer);
+
+    // Close the file
+    _close(fd);
+
     return 0;
-
-}`;
+}
+`;
 
 console.log(FileHandleReadInput.innerHTML);
 FileHandleRead.appendChild(FileHandleReadInput);
@@ -236,7 +220,7 @@ FileHandleReadInput.addEventListener('input', ()=>
         console.log(FileHandleReadInput.scrollHeight);
     });
 fileHandleRead();
-
+/**
 const FileHandleReadRun = document.getElementById('FileHandleReadRun');
 FileHandleReadRun.addEventListener('click',async ()=>{
 
@@ -244,32 +228,9 @@ FileHandleReadRun.addEventListener('click',async ()=>{
     const FileHandleReadOutputContainer=document.getElementById('FileHandleReadOutputContainer');
     
     runProgram(FileHandleReadInput , FileHandleReadOutputContainer,FileHandleReadOutput);
-    /** try{
-    const response = await  fetch('/fdr', {method:'GET'} ) ;
-    const data= await response.json();
-    console.log(data);
-    if(response.ok)
-    {
-        
-        console.log('File Opened Successful');
-
-        FileHandleReadOutput.value=`${data.stdout}`;
-        FileHandleReadOutputContainer.appendChild(FileHandleReadOutput);
-
-    }
-    else{
-        console.error('File Open Failed');
-        FileHandleReadOutput.value=`${data.error}`;
-        FileHandleReadOutputContainer.appendChild(FileHandleReadOutput);
-
-        throw new Error(`File Open Failed ${data.error}`);
-        
-    } 
-    } catch(err){
-        console.log(`An error occured : ${err.message}`);
-    } */
+   
 });
-
+*/
 
 
 
@@ -610,7 +571,7 @@ MemoryMappedReadInput.addEventListener('input', ()=>
         console.log(MemoryMappedReadInput.scrollHeight);
     });
 memoryMappedRead();
-
+/**
 const MemoryMappedReadRun = document.getElementById('MemoryMappedReadRun');
 MemoryMappedReadRun.addEventListener('click',async ()=>{
 
@@ -618,31 +579,8 @@ MemoryMappedReadRun.addEventListener('click',async ()=>{
     const MemoryMappedReadOutputContainer=document.getElementById('MemoryMappedReadOutputContainer');
     
     runProgram(MemoryMappedReadInput , MemoryMappedReadOutputContainer,MemoryMappedReadOutput);
-    /** try{
-    const response = await  fetch('/shmr', {method:'GET'} ) ;
-    const data= await response.json();
-    console.log(data);
-    if(response.ok)
-    {
-        
-        console.log('File Opened Successful');
-
-        MemoryMappedReadOutput.value=`${data.stdout}`;
-        MemoryMappedReadOutputContainer.appendChild(MemoryMappedReadOutput);
-
-    }
-    else{
-        console.error('File Open Failed');
-        MemoryMappedReadOutput.value=`${data.error}`;
-        MemoryMappedReadOutputContainer.appendChild(MemoryMappedReadOutput);
-
-        throw new Error(`File Open Failed ${data.error}`);
-        
-    } 
-    } catch(err){
-        console.log(`An error occured : ${err.message}`);
-    } */
-});
+    
+}); */
 
 
 
@@ -707,41 +645,15 @@ PipeInput.addEventListener('input', ()=>
         console.log(PipeInput.scrollHeight);
     });
 pipe();
-
+/**
 const PipeRun = document.getElementById('PipeRun');
 PipeRun.addEventListener('click',async ()=>{
 
     const PipeOutput = document.getElementById('PipeOutput');
     const PipeOutputContainer=document.getElementById('PipeOutputContainer');
     runProgram(PipeInput , PipeOutputContainer,PipeOutput);
-    /**
-    try{
-    const response = await  fetch('/pipe', {method:'GET'} ) ;
-    const data= await response.json();
-    console.log(data);
-    if(response.ok)
-    {
-        
-        console.log('File Opened Successful');
-
-        PipeOutput.value=`${data.stdout}`;
-        PipeOutputContainer.appendChild(PipeOutput);
-
-    }
-    else{
-        console.error('File Open Failed');
-        PipeOutput.value=`${data.error}`;
-        PipeOutputContainer.appendChild(PipeOutput);
-
-        throw new Error(`File Open Failed ${data.error}`);
-        
-    } 
-    } catch(err){
-        console.log(`An error occured : ${err.message}`);
-    }
-        */
 });
-
+*/
 
 //Pipe Read
 
@@ -800,8 +712,8 @@ const PipeReadOutput = document.getElementById('PipeReadOutput');
 const PipeReadOutputContainer=document.getElementById('PipeReadOutputContainer');
 
 const PipeReadRun = document.getElementById('PipeReadRun');
-PipeReadRun.addEventListener('click',async ()=>{
-    runProgram(PipeReadInput , PipeReadOutputContainer,PipeReadOutput);
+PipeReadRun.addEventListener('click',async (event)=>{
+    runProgram(PipeReadInput , PipeReadOutputContainer,PipeReadOutput,event );
    /** try{
     const response = await  fetch('/pipeclient', {method:'GET'} ) ;
     const data= await response.json();
@@ -827,32 +739,67 @@ PipeReadRun.addEventListener('click',async ()=>{
         console.log(`An error occured : ${err.message}`);
     } */
 });
+async function runProgram(input, container, output, event) {
+    // Prevent page reload if this is called from a form
+    if (event) {
+        event.preventDefault();
+    }
 
-
-async function runProgram(input , container ,output )
-{
     const inputval = replaceN(input.value.trim());
-    //console.log("inputval is ",inputval);
-    //console.log("Run Program Called");
-    const inputBody = {input :inputval} ;
-    try{
-        const response = await fetch('/dummy',{method: 'POST', headers: {'Content-Type' : 'application/json'},body: JSON.stringify(inputBody) } );
-        const data =await response.json();
-        if(response.ok)
-        {
-            output.value=`${data.stdout}`;
+    const inputBody = { input: inputval };
+
+    try {
+        const response = await fetch('http://localhost:3000/dummy', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(inputBody)
+        });
+        const data = await response.json();
+        if (response.ok) {
+            output.value = `${data.stdout}`;
             console.log(`Run output : ${data.stdout}`);
-        }
-        else
-        {
-            output.value=`${data.error}`;
+        } else {
+            output.value = `${data.error}`;
             console.log(`Run output : ${data.error}`);
         }
         container.appendChild(output);
-    } catch(err){
-        console.log(`An error occured :${err.message}`);
+    } catch (err) {
+        console.log(`An error occurred: ${err}`);
     }
 }
+
+
+async function runProgram(input, container, output) {
+    // Try to prevent default if run inside an event context
+    if (window.event && typeof window.event.preventDefault === 'function') {
+        window.event.preventDefault();
+    }
+
+    const inputval = replaceN(input.value.trim());
+    const inputBody = { input: inputval };
+
+    try {
+        const response = await fetch('http://localhost:3000/dummy', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(inputBody)
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+            output.value = `${data.stdout}`;
+            console.log(`Run output : ${data.stdout}`);
+        } else {
+            output.value = `${data.error}`;
+            console.log(`Run output : ${data.error}`);
+        }
+
+        container.appendChild(output);
+    } catch (err) {
+        console.log(`An error occurred: ${err}`);
+    }
+}
+
 
 
 

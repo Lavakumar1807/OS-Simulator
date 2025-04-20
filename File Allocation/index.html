@@ -3,120 +3,187 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>File Allocation Simulator Game</title>
+  <title>File Allocation Simulator</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 </head>
 <body>
-  <!-- NAVIGATION -->
-  <nav class="navbar">
-    <div class="nav-left">
-      <span class="logo">FASimulator</span>
-    </div>
-    <div class="nav-right">
-      <ul class="nav-links">
-        <li><a href="#" onclick="openHelp()">Help</a></li>
-        <li><a href="#" onclick="openAbout()">About</a></li>
-        <li><a href="#" onclick="openSettings()">Settings</a></li>
-        <li><a href="#" onclick="toggleTheme()">Toggle Theme</a></li>
-      </ul>
-    </div>
-  </nav>
+   <!-- Particle Background -->
+   <div class="particle-background" id="particles-js"></div>
+    
+   <!-- Navigation Bar (New) -->
+   <nav class="navbar">
+       <div class="container nav-container">
+           <div class="logo">
+               <i class="fas fa-microchip"></i>
+               <span>OSphere</span>
+           </div>
+           <div class="nav-links">
+               <a href="../index.html" class="active"><i class="fas fa-home"></i> Home</a>
+               <a href="../collaborators.html"><i class="fa-solid fa-user-group"></i>Collaborators</a>
+           </div>
+       </div>
+   </nav>
 
-  <!-- HEADER -->
+  <!-- HEADER WITH ANIMATED BACKGROUND -->
   <header class="main-header">
-    <h1>File Allocation Simulator</h1>
-    <p class="subheading">Simulate various file allocation strategies used in Operating Systems</p>
+    <div class="header-content">
+      <h1>File Allocation Simulator</h1>
+      <p class="subheading">Visualize how operating systems manage file storage in memory</p>
+      <div class="header-animation">
+        <div class="memory-particle"></div>
+        <div class="memory-particle"></div>
+        <div class="memory-particle"></div>
+      </div>
+    </div>
   </header>
 
   <!-- MAIN CONTAINER -->
-  <main class="container">
+  <main class="simulation-container">
     <!-- USER CONTROLS -->
     <section class="controls">
-      <div class="input-section">
-        <label for="fileName">File Name:</label>
-        <input type="text" id="fileName" placeholder="e.g. data.txt" />
-      </div>
-      <div class="input-section">
-        <label for="fileSize">File Size:</label>
-        <input type="number" id="fileSize" min="1" max="20" />
-      </div>
-      <div class="input-section">
-        <label for="allocationType">Allocation Type:</label>
-        <select id="allocationType">
-          <option value="contiguous">Contiguous</option>
-          <option value="linked">Linked</option>
-          <option value="indexed">Indexed</option>
-        </select>
-      </div>
-      <div class="input-section">
-        <button>Simulate Allocation</button>
-        <button onclick="resetGrid()">Reset Memory</button>
-      </div>
-    </section>
-
-    <!-- TOOLS PANEL -->
-    <section class="tools-panel">
-      <h2>Tools & Options</h2>
-      <div class="tool-row">
-        <label for="gridSize">Grid Size:</label>
-        <select id="gridSize" onchange="resizeGrid()">
-          <option value="100">10 x 10</option>
-          <option value="144">12 x 12</option>
-          <option value="225">15 x 15</option>
-        </select>
-        <label for="blockSize">Block Size:</label>
-        <select id="blockSize" onchange="adjustBlockSize()">
-          <option value="small">Small</option>
-          <option value="medium" selected>Medium</option>
-          <option value="large">Large</option>
-        </select>
+      <div class="control-card">
+        <div class="card-header">
+          <i class="fas fa-sliders-h"></i>
+          <h2>Allocation Controls</h2>
+        </div>
+        <div class="card-body">
+          <div class="input-section">
+            <label for="fileName"><i class="fas fa-file-alt"></i> File Name:</label>
+            <input type="text" id="fileName" placeholder="e.g. data.txt" />
+          </div>
+          <div class="input-section">
+            <label for="fileSize"><i class="fas fa-weight"></i> File Size (blocks):</label>
+            <input type="number" id="fileSize" min="1" max="20" placeholder="1-20" />
+          </div>
+          <div class="input-section">
+            <label for="allocationType"><i class="fas fa-project-diagram"></i> Allocation Strategy:</label>
+            <select id="allocationType">
+              <option value="contiguous">Contiguous Allocation</option>
+              <option value="linked">Linked Allocation</option>
+              <option value="indexed">Indexed Allocation</option>
+            </select>
+          </div>
+          <div class="button-group">
+            <button id="simulateBtn" class="primary-btn">
+              <i class="fas fa-play"></i> Simulate
+            </button>
+            <button onclick="resetGrid()" class="secondary-btn">
+              <i class="fas fa-redo"></i> Reset
+            </button>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- MEMORY DISPLAY -->
+    <!-- MEMORY VISUALIZATION SECTION -->
     <section class="memory-section">
-      <h2>Memory Grid</h2>
+      <div class="memory-header">
+        <h2><i class="fas fa-microchip"></i> Memory Grid</h2>
+        <div class="memory-tools">
+          <div class="tool-row">
+            <label for="gridSize"><i class="fas fa-th"></i> Grid Size:</label>
+            <select id="gridSize" onchange="resizeGrid()">
+              <option value="100">10 x 10</option>
+              <option value="144">12 x 12</option>
+              <option value="225">15 x 15</option>
+            </select>
+            <label for="animationSpeed"><i class="fas fa-tachometer-alt"></i> Animation:</label>
+            <select id="animationSpeed">
+              <option value="fast">Fast</option>
+              <option value="medium" selected>Medium</option>
+              <option value="slow">Slow</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
       <div class="legend">
-        <span class="legend-box allocated"></span> Contiguous
-        <span class="legend-box linked"></span> Linked
-        <span class="legend-box indexed"></span> Indexed
-        <span class="legend-box free"></span> Free
+        <div class="legend-item">
+          <span class="legend-box allocated"></span> 
+          <span>Contiguous</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-box linked"></span> 
+          <span>Linked</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-box indexed"></span> 
+          <span>Indexed</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-box free"></span> 
+          <span>Free</span>
+        </div>
       </div>
-      <div class="grid" id="memoryGrid">
-        <!-- JS dynamically inserts blocks -->
+
+      <div class="grid-container">
+        <div class="grid" id="memoryGrid">
+          <!-- JS dynamically inserts blocks -->
+        </div>
+      </div>
+
+      <!-- MEMORY STATS -->
+      <div class="memory-stats">
+        <div class="stats-card">
+          <h3><i class="fas fa-chart-pie"></i> Memory Statistics</h3>
+          <div class="stats-grid">
+            <div class="stat-item">
+              <span class="stat-label">Total Blocks:</span>
+              <span id="totalBlocks" class="stat-value">100</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Used Blocks:</span>
+              <span id="usedBlocks" class="stat-value">0</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Free Blocks:</span>
+              <span id="freeBlocks" class="stat-value">100</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Files Stored:</span>
+              <span id="fileCount" class="stat-value">0</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- MEMORY STATS -->
-    <section class="memory-stats">
-      <h3>Memory Stats</h3>
-      <ul>
-        <li>Total Blocks: <span id="totalBlocks">100</span></li>
-        <li>Used Blocks: <span id="usedBlocks">0</span></li>
-        <li>Free Blocks: <span id="freeBlocks">100</span></li>
-        <li>Files Stored: <span id="fileCount">0</span></li>
-      </ul>
+    <!-- OUTPUT MESSAGE -->
+    <section id="outputMessage" class="output-message">
+      <div class="message-card">
+        <i class="fas fa-terminal message-icon"></i>
+        <p>Ready to simulate. Enter file details above to start.</p>
+      </div>
     </section>
 
-   <!-- OUTPUT MESSAGE -->
-<section id="outputMessage" class="output-message"></section>
-
-<!-- FILE HISTORY -->
-<section class="history-section">
-  <h2>Allocation History</h2>
-  <div id="historyLog" class="history-log">
-    <p>No actions yet. Start a simulation to track history.</p>
-  </div>
-</section>
-
+    <!-- FILE HISTORY -->
+    <section class="history-section">
+      <div class="history-header">
+        <h2><i class="fas fa-history"></i> Allocation History</h2>
+        <button class="history-btn" id="exportHistory">
+          <i class="fas fa-download"></i> Export
+        </button>
+      </div>
+      <div id="historyLog" class="history-log">
+        <p><i class="fas fa-info-circle"></i> System initialized. Ready to allocate files.</p>
+      </div>
+    </section>
   </main>
 
-  <!-- FILE INSPECTOR MODAL -->
+  <!-- INSPECTOR MODAL -->
   <div class="modal" id="inspectorModal">
     <div class="modal-content">
       <span class="close" onclick="closeInspector()">&times;</span>
-      <h2>Block Details</h2>
-      <p id="blockDetails">Click a block to inspect its status.</p>
+      <div class="modal-header">
+        <i class="fas fa-search"></i>
+        <h2>Block Inspector</h2>
+      </div>
+      <div class="modal-body">
+        <div id="blockDetails" class="block-details">
+          <p>Click any block in the memory grid to inspect its details.</p>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -124,14 +191,47 @@
   <div class="modal" id="helpModal">
     <div class="modal-content">
       <span class="close" onclick="closeHelp()">&times;</span>
-      <h2>Help</h2>
-      <p>📌 Use this simulator to visualize different file allocation strategies:</p>
-      <ul>
-        <li><strong>Contiguous:</strong> Files are stored in consecutive blocks.</li>
-        <li><strong>Linked:</strong> Each block points to the next one.</li>
-        <li><strong>Indexed:</strong> Index block maintains list of all block addresses.</li>
-      </ul>
-      <p>➕ You can also adjust grid size and block visual size from the options panel.</p>
+      <div class="modal-header">
+        <i class="fas fa-question-circle"></i>
+        <h2>How to Use the Simulator</h2>
+      </div>
+      <div class="modal-body">
+        <div class="help-section">
+          <h3>File Allocation Strategies</h3>
+          <div class="help-card">
+            <div class="help-icon"><i class="fas fa-th-large"></i></div>
+            <div class="help-content">
+              <h4>Contiguous Allocation</h4>
+              <p>Files are stored in consecutive blocks of memory. Fast but can lead to fragmentation over time.</p>
+            </div>
+          </div>
+          <div class="help-card">
+            <div class="help-icon"><i class="fas fa-link"></i></div>
+            <div class="help-content">
+              <h4>Linked Allocation</h4>
+              <p>Each block contains a pointer to the next block. Eliminates external fragmentation but has overhead.</p>
+            </div>
+          </div>
+          <div class="help-card">
+            <div class="help-icon"><i class="fas fa-sitemap"></i></div>
+            <div class="help-content">
+              <h4>Indexed Allocation</h4>
+              <p>Uses an index block to store pointers to all data blocks. Supports random access but uses extra space.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="help-section">
+          <h3>Using the Simulator</h3>
+          <ol>
+            <li>Enter a file name (optional)</li>
+            <li>Specify the file size (in blocks)</li>
+            <li>Choose an allocation strategy</li>
+            <li>Click "Simulate" to see the allocation in action</li>
+            <li>Inspect blocks by clicking on them</li>
+          </ol>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -139,10 +239,40 @@
   <div class="modal" id="aboutModal">
     <div class="modal-content">
       <span class="close" onclick="closeAbout()">&times;</span>
-      <h2>About This Project</h2>
-      <p>This is a mini project for CSE - Operating Systems course, built to demonstrate file allocation methods.</p>
-      <p>💡 Developed by Himanshu | NITK Surathkal</p>
-      <p>📅 Year: 2025</p>
+      <div class="modal-header">
+        <i class="fas fa-info-circle"></i>
+        <h2>About This Project</h2>
+      </div>
+      <div class="modal-body">
+        <p>This interactive simulator visualizes three common file allocation methods used in operating systems. It demonstrates how files are organized in memory and the tradeoffs between different strategies.</p>
+        
+        <div class="about-card">
+          <div class="about-icon"><i class="fas fa-user-graduate"></i></div>
+          <div class="about-details">
+            <h4>Academic Project</h4>
+            <p>Developed for CSE - Operating Systems course</p>
+            <p>NITK Surathkal, 2025</p>
+          </div>
+        </div>
+        
+        <div class="about-card">
+          <div class="about-icon"><i class="fas fa-code"></i></div>
+          <div class="about-details">
+            <h4>Technologies Used</h4>
+            <p>HTML5, CSS3, JavaScript</p>
+            <p>No external libraries or frameworks</p>
+          </div>
+        </div>
+        
+        <div class="about-card">
+          <div class="about-icon"><i class="fas fa-user"></i></div>
+          <div class="about-details">
+            <h4>Developer</h4>
+            <p>Himanshu</p>
+            <p>Computer Science & Engineering</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -150,18 +280,172 @@
   <div class="modal" id="settingsModal">
     <div class="modal-content">
       <span class="close" onclick="closeSettings()">&times;</span>
-      <h2>Settings</h2>
-      <p>⚙️ Future features like save state, export to CSV, or persistent memory can be added here.</p>
-      <p>This section is under construction 🚧</p>
+      <div class="modal-header">
+        <i class="fas fa-cog"></i>
+        <h2>Settings</h2>
+      </div>
+      <div class="modal-body">
+        <div class="settings-section">
+          <h3>Display Settings</h3>
+          <div class="setting-row">
+            <label for="blockSize">Block Size:</label>
+            <select id="blockSize" onchange="adjustBlockSize()">
+              <option value="small">Small</option>
+              <option value="medium" selected>Medium</option>
+              <option value="large">Large</option>
+            </select>
+          </div>
+          <div class="setting-row">
+            <label for="showBlockNumbers">Show Block Numbers:</label>
+            <input type="checkbox" id="showBlockNumbers" checked />
+          </div>
+        </div>
+        
+        <div class="settings-section">
+          <h3>Advanced Options</h3>
+          <div class="setting-row">
+            <label for="fragmentation">Enable Fragmentation Simulation:</label>
+            <input type="checkbox" id="fragmentation" />
+          </div>
+          <div class="setting-row">
+            <label for="autoAllocate">Auto-Allocate on Startup:</label>
+            <input type="checkbox" id="autoAllocate" />
+          </div>
+        </div>
+        
+        <div class="settings-footer">
+          <p>More settings coming soon! 🚧</p>
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- FOOTER -->
   <footer class="footer">
-    <p>&copy; 2025 File Allocation Simulator | OS Mini Project by Himanshu</p>
+    <div class="footer-content">
+      <div class="logo">
+        <i class="fas fa-microchip"></i>
+        <span>OSphere</span>
+    </div>
+      <p>&copy; 2025 File Allocation Simulator | OS Mini Project by Himanshu</p>
+      <div class="footer-links">
+        <a href="#" onclick="openHelp()">Help</a>
+        <a href="#" onclick="openAbout()">About</a>
+        <a href="#" onclick="openSettings()">Settings</a>
+      </div>
+    </div>
   </footer>
 
   <!-- JAVASCRIPT -->
   <script src="script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+  <script>
+      // Particles.js configuration (same as your original)
+      particlesJS("particles-js", {
+          "particles": {
+              "number": {
+                  "value": 80,
+                  "density": {
+                      "enable": true,
+                      "value_area": 800
+                  }
+              },
+              "color": {
+                  "value": "#00b4d8"
+              },
+              "shape": {
+                  "type": "circle",
+                  "stroke": {
+                      "width": 0,
+                      "color": "#000000"
+                  },
+                  "polygon": {
+                      "nb_sides": 5
+                  }
+              },
+              "opacity": {
+                  "value": 0.5,
+                  "random": false,
+                  "anim": {
+                      "enable": false,
+                      "speed": 1,
+                      "opacity_min": 0.1,
+                      "sync": false
+                  }
+              },
+              "size": {
+                  "value": 3,
+                  "random": true,
+                  "anim": {
+                      "enable": false,
+                      "speed": 40,
+                      "size_min": 0.1,
+                      "sync": false
+                  }
+              },
+              "line_linked": {
+                  "enable": true,
+                  "distance": 150,
+                  "color": "#00b4d8",
+                  "opacity": 0.2,
+                  "width": 1
+              },
+              "move": {
+                  "enable": true,
+                  "speed": 2,
+                  "direction": "none",
+                  "random": false,
+                  "straight": false,
+                  "out_mode": "out",
+                  "bounce": false,
+                  "attract": {
+                      "enable": false,
+                      "rotateX": 600,
+                      "rotateY": 1200
+                  }
+              }
+          },
+          "interactivity": {
+              "detect_on": "canvas",
+              "events": {
+                  "onhover": {
+                      "enable": true,
+                      "mode": "grab"
+                  },
+                  "onclick": {
+                      "enable": true,
+                      "mode": "push"
+                  },
+                  "resize": true
+              },
+              "modes": {
+                  "grab": {
+                      "distance": 140,
+                      "line_linked": {
+                          "opacity": 1
+                      }
+                  },
+                  "bubble": {
+                      "distance": 400,
+                      "size": 40,
+                      "duration": 2,
+                      "opacity": 8,
+                      "speed": 3
+                  },
+                  "repulse": {
+                      "distance": 200,
+                      "duration": 0.4
+                  },
+                  "push": {
+                      "particles_nb": 4
+                  },
+                  "remove": {
+                      "particles_nb": 2
+                  }
+              }
+          },
+          "retina_detect": true
+      });
+  </script>
 </body>
 </html>

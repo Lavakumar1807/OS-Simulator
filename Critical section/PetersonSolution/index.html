@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peterson's Solution Simulator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+<body>
+    <div class="particle-background" id="particles-js"></div>
+    
+    <!-- Navigation Bar (New) -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <i class="fas fa-microchip"></i>
+                <span>OSphere</span>
+            </div>
+            <div class="nav-links">
+                <a href="../../index.html" class="active"><i class="fas fa-home"></i> Home</a>
+                <a href="../../collaborators.html"><i class="fas fa-info-circle"></i>Collaborators</a>
+            </div>
+            <div class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Peterson's Solution Simulator</h1>
+        <div class="description">
+            <p>This simulator demonstrates Peterson's solution for mutual exclusion between two processes.</p>
+        </div>
+
+        <div class="controls">
+            <button id="start-btn">Start Simulation</button>
+            <button id="reset-btn">Reset</button>
+            <div class="speed-control">
+                <label for="speed">Simulation Speed:</label>
+                <input type="range" id="speed" min="1" max="10" value="5">
+            </div>
+        </div>
+
+        <div class="simulation-area">
+            <div class="process-container">
+                <div class="process" id="process0">
+                    <h2>Process 0</h2>
+                    <div class="code-section">
+                        <pre id="code0">
+flag[0] = false;
+flag[1] = false;
+turn = 0;
+
+// Process 0
+flag[0] = true;
+turn = 1;
+while(flag[1] && turn == 1) {
+    // busy wait
+}
+// critical section
+// ...
+flag[0] = false;
+                        </pre>
+                    </div>
+                    <div class="state">
+                        <p>State: <span id="state0">Ready</span></p>
+                    </div>
+                    <div class="execution-pointer" id="pointer0"></div>
+                </div>
+
+                <div class="process" id="process1">
+                    <h2>Process 1</h2>
+                    <div class="code-section">
+                        <pre id="code1">
+flag[0] = false;
+flag[1] = false;
+turn = 0;
+
+// Process 1
+flag[1] = true;
+turn = 0;
+while(flag[0] && turn == 0) {
+    // busy wait
+}
+// critical section
+// ...
+flag[1] = false;
+                        </pre>
+                    </div>
+                    <div class="state">
+                        <p>State: <span id="state1">Ready</span></p>
+                    </div>
+                    <div class="execution-pointer" id="pointer1"></div>
+                </div>
+            </div>
+
+            <div class="shared-resources">
+                <h2>Shared Resources</h2>
+                <div class="variables">
+                    <div class="variable">
+                        <span>flag[0]:</span>
+                        <span id="flag0">false</span>
+                    </div>
+                    <div class="variable">
+                        <span>flag[1]:</span>
+                        <span id="flag1">false</span>
+                    </div>
+                    <div class="variable">
+                        <span>turn:</span>
+                        <span id="turn">0</span>
+                    </div>
+                    <div class="critical-section">
+                        <h3>Critical Section</h3>
+                        <div id="critical-section" class="cs-empty">No process in critical section</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-panel">
+            <h2>Simulation Log</h2>
+            <div id="log-container">
+                <ul id="simulation-log">
+                    <!-- Log entries will be added here -->
+                </ul>
+            </div>
+        </div>
+
+        <div class="about-peterson">
+            <h2>Peterson's Solution</h2>
+            <p>Peterson's Solution is a classical algorithm used for achieving mutual exclusion between two processes. It is a simple, software-based solution for critical section problems.</p>
+            <ul>
+                <li><strong>Mutual Exclusion:</strong> Ensures that only one process can be in the critical section at a time.</li>
+                <li><strong>Progress:</strong> If no process is in the critical section, one of the waiting processes must be allowed to enter.</li>
+                <li><strong>Bounded Waiting:</strong> Ensures that a process will eventually get its turn to execute.</li>
+            </ul>
+            <p>This algorithm works by using two boolean flags and a shared turn variable to manage process entry into the critical section.</p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Particles.js configuration (same as your original)
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#00b4d8"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#00b4d8",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+
+        // Mobile Menu Toggle
+        document.getElementById('navToggle').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('show');
+        });
+
+        // Filter buttons
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+                // You would add actual filtering logic here
+            });
+        });
+    </script>
+</body>
+</html>

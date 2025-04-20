@@ -5,176 +5,306 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OS Deadlock Simulator</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 </head>
 <body>
-    <h1>OS Deadlock Simulator</h1>
+    <!-- Particle Background -->
+    <div class="particle-background" id="particles-js"></div>
     
-    <div class="tab">
-        <button class="tablinks active" id="defaultOpen" onclick="openTab(event, 'setup')">System Configuration</button>
-        <button class="tablinks" onclick="openTab(event, 'avoidance')">Deadlock Avoidance</button>
-        <button class="tablinks" onclick="openTab(event, 'detection')">Deadlock Detection</button>
-        <button class="tablinks" onclick="openTab(event, 'prevention')">Deadlock Prevention</button>
-    </div>
-    
-    <!-- System Configuration Tab -->
-    <div id="setup" class="tabcontent" style="display: block;">
-        <div class="container">
-            <div class="panel">
-                <h2>Resource Setup</h2>
-                <div>
-                    <label for="numResources">Number of Resource Types:</label>
-                    <input type="number" id="numResources" min="1" max="10" value="3">
-                    <button onclick="generateResourceInputs()">Generate</button>
+    <!-- Navigation Bar (New) -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <i class="fas fa-microchip"></i>
+                <span>OSphere</span>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html" class="active"><i class="fas fa-home"></i> Home</a>
+                <a href="../collaborators.html"><i class="fa-solid fa-user-group"></i>Collaborators</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="simulation">
+            <h1>OS Deadlock Simulator</h1>
+        
+        <div class="tab">
+            <button class="tablinks active" id="defaultOpen" onclick="openTab(event, 'setup')">System Configuration</button>
+            <button class="tablinks" onclick="openTab(event, 'avoidance')">Deadlock Avoidance</button>
+            <button class="tablinks" onclick="openTab(event, 'detection')">Deadlock Detection</button>
+            <button class="tablinks" onclick="openTab(event, 'prevention')">Deadlock Prevention</button>
+        </div>
+        
+        <!-- System Configuration Tab -->
+        <div id="setup" class="tabcontent" style="display: block;">
+            <div class="simulation-container">
+                <div class="panel">
+                    <h2>Resource Setup</h2>
+                    <div>
+                        <label for="numResources">Number of Resource Types:</label>
+                        <input type="number" id="numResources" min="1" max="10" value="3">
+                        <button onclick="generateResourceInputs()">Generate</button>
+                    </div>
+                    <div id="resourceInstancesInputs"></div>
+                    <button id="setupResourcesBtn">Confirm Resources</button>
                 </div>
-                <div id="resourceInstancesInputs"></div>
-                <button id="setupResourcesBtn">Confirm Resources</button>
+                
+                <div class="panel">
+                    <h2>Process Setup</h2>
+                    <div>
+                        <label for="numProcesses">Number of Processes:</label>
+                        <input type="number" id="numProcesses" min="1" max="10" value="4">
+                        <button onclick="generateProcessInputs()">Generate</button>
+                    </div>
+                    <div id="processMaxClaimInputs"></div>
+                    <button id="setupProcessesBtn">Confirm Processes</button>
+                </div>
             </div>
             
             <div class="panel">
-                <h2>Process Setup</h2>
-                <div>
-                    <label for="numProcesses">Number of Processes:</label>
-                    <input type="number" id="numProcesses" min="1" max="10" value="4">
-                    <button onclick="generateProcessInputs()">Generate</button>
+                <h2>Initial Allocation</h2>
+                <div id="allocationInputs"></div>
+                <button id="setupAllocationBtn">Set Allocation</button>
+            </div>
+            
+            <div class="panel">
+                <h2>System State Overview</h2>
+                <div class="simulation-container">
+                    <div>
+                        <h3>Available Resources</h3>
+                        <div id="availableResources"></div>
+                    </div>
+                    <div>
+                        <h3>Resource Allocation Graph</h3>
+                        <canvas id="setupGraph" width="600" height="400"></canvas>
+                    </div>
                 </div>
-                <div id="processMaxClaimInputs"></div>
-                <button id="setupProcessesBtn">Confirm Processes</button>
             </div>
         </div>
         
-        <div class="panel">
-            <h2>Initial Allocation</h2>
-            <div id="allocationInputs"></div>
-            <button id="setupAllocationBtn">Set Allocation</button>
+        <!-- Deadlock Avoidance Tab -->
+        <div id="avoidance" class="tabcontent">
+            <div class="panel">
+                <h2>Banker's Algorithm</h2>
+                <div class="simulation-container">
+                    <div>
+                        <h3>System State</h3>
+                        <div>
+                            <h4>Allocation Matrix</h4>
+                            <div id="allocationTable"></div>
+                        </div>
+                        <div>
+                            <h4>Max Claim Matrix</h4>
+                            <div id="maxClaimTable"></div>
+                        </div>
+                        <div>
+                            <h4>Need Matrix</h4>
+                            <div id="needTable"></div>
+                        </div>
+                        <div>
+                            <h4>Available Resources</h4>
+                            <div id="availableTable"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Safe State Checker</h3>
+                        <button id="checkSystemSafetyBtn">Check Safety</button>
+                        <div id="systemSafetyResult" class="result-box"></div>
+                        
+                        <h3>Resource Request Evaluation</h3>
+                        <div>
+                            <label for="bankerProcess">Process:</label>
+                            <select id="bankerProcess"></select>
+                        </div>
+                        <div id="bankerResourceInputs"></div>
+                        <button id="checkRequestSafetyBtn">Evaluate Request</button>
+                        <div id="requestSafetyResult" class="result-box"></div>
+                    </div>
+                </div>
+            </div>
         </div>
         
-        <div class="panel">
-            <h2>System State Overview</h2>
-            <div class="container">
-                <div>
-                    <h3>Available Resources</h3>
-                    <div id="availableResources"></div>
+        <!-- Deadlock Detection Tab -->
+        <div id="detection" class="tabcontent">
+            <div class="panel">
+                <h2>Deadlock Detection</h2>
+                <div class="simulation-container">
+                    <div>
+                        <h3>Current System State</h3>
+                        <div>
+                            <h4>Allocation Matrix</h4>
+                            <div id="detectionAllocationTable"></div>
+                        </div>
+                        <div>
+                            <h4>Request Matrix</h4>
+                            <div id="requestTable"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Create Resource Request</h3>
+                        <div>
+                            <label for="requestProcess">Process:</label>
+                            <select id="requestProcess"></select>
+                        </div>
+                        <div id="requestResourceInputs"></div>
+                        <button id="addRequestBtn">Submit Request</button>
+                    </div>
                 </div>
+                
                 <div>
-                    <h3>Resource Allocation Graph</h3>
-                    <canvas id="setupGraph" width="600" height="400"></canvas>
+                    <h3>Detect Deadlocks</h3>
+                    <button id="detectDeadlockBtn">Run Detection</button>
+                    <button onclick="simulateDeadlock()">Simulate Deadlock</button>
+                    <div id="detectionResult" class="result-box"></div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <!-- Deadlock Prevention Tab -->
+        <div id="prevention" class="tabcontent">
+            <div class="panel">
+                <h2>Deadlock Prevention (Circular Wait - Resource Ordering)</h2>
+                <div class="simulation-container">
+                    <div>
+                        <h3>Resource Request Order</h3>
+                        <div id="resourceOrderingTable"></div>
+                        <p>Resources must be requested in increasing order of resource numbers.</p>
+                    </div>
+                    <div>
+                        <h3>Process Resource Management</h3>
+                        <div>
+                            <label for="preventionProcess">Process:</label>
+                            <select id="preventionProcess"></select>
+                        </div>
+                        <div>
+                            <label for="preventionResource">Resource:</label>
+                            <select id="preventionResource"></select>
+                        </div>
+                        <button id="requestOrderedResourceBtn">Request Resource</button>
+                        <button onclick="releaseResource()">Release Resource</button>
+                        <div id="preventionResult" class="result-box"></div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3>Current Process Allocations</h3>
+                    <div id="processHoldingsTable"></div>
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- Deadlock Avoidance Tab -->
-    <div id="avoidance" class="tabcontent">
-        <div class="panel">
-            <h2>Banker's Algorithm</h2>
-            <div class="container">
-                <div>
-                    <h3>System State</h3>
-                    <div>
-                        <h4>Allocation Matrix</h4>
-                        <div id="allocationTable"></div>
-                    </div>
-                    <div>
-                        <h4>Max Claim Matrix</h4>
-                        <div id="maxClaimTable"></div>
-                    </div>
-                    <div>
-                        <h4>Need Matrix</h4>
-                        <div id="needTable"></div>
-                    </div>
-                    <div>
-                        <h4>Available Resources</h4>
-                        <div id="availableTable"></div>
-                    </div>
-                </div>
-                <div>
-                    <h3>Safe State Checker</h3>
-                    <button id="checkSystemSafetyBtn">Check Safety</button>
-                    <div id="systemSafetyResult" class="result-box"></div>
-                    
-                    <h3>Resource Request Evaluation</h3>
-                    <div>
-                        <label for="bankerProcess">Process:</label>
-                        <select id="bankerProcess"></select>
-                    </div>
-                    <div id="bankerResourceInputs"></div>
-                    <button id="checkRequestSafetyBtn">Evaluate Request</button>
-                    <div id="requestSafetyResult" class="result-box"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Deadlock Detection Tab -->
-    <div id="detection" class="tabcontent">
-        <div class="panel">
-            <h2>Deadlock Detection</h2>
-            <div class="container">
-                <div>
-                    <h3>Current System State</h3>
-                    <div>
-                        <h4>Allocation Matrix</h4>
-                        <div id="detectionAllocationTable"></div>
-                    </div>
-                    <div>
-                        <h4>Request Matrix</h4>
-                        <div id="requestTable"></div>
-                    </div>
-                </div>
-                <div>
-                    <h3>Create Resource Request</h3>
-                    <div>
-                        <label for="requestProcess">Process:</label>
-                        <select id="requestProcess"></select>
-                    </div>
-                    <div id="requestResourceInputs"></div>
-                    <button id="addRequestBtn">Submit Request</button>
-                </div>
-            </div>
-            
-            <div>
-                <h3>Detect Deadlocks</h3>
-                <button id="detectDeadlockBtn">Run Detection</button>
-                <button onclick="simulateDeadlock()">Simulate Deadlock</button>
-                <div id="detectionResult" class="result-box"></div>
-            </div>
-            
-        </div>
-    </div>
-    
-    <!-- Deadlock Prevention Tab -->
-    <div id="prevention" class="tabcontent">
-        <div class="panel">
-            <h2>Deadlock Prevention (Circular Wait - Resource Ordering)</h2>
-            <div class="container">
-                <div>
-                    <h3>Resource Request Order</h3>
-                    <div id="resourceOrderingTable"></div>
-                    <p>Resources must be requested in increasing order of resource numbers.</p>
-                </div>
-                <div>
-                    <h3>Process Resource Management</h3>
-                    <div>
-                        <label for="preventionProcess">Process:</label>
-                        <select id="preventionProcess"></select>
-                    </div>
-                    <div>
-                        <label for="preventionResource">Resource:</label>
-                        <select id="preventionResource"></select>
-                    </div>
-                    <button id="requestOrderedResourceBtn">Request Resource</button>
-                    <button onclick="releaseResource()">Release Resource</button>
-                    <div id="preventionResult" class="result-box"></div>
-                </div>
-            </div>
-            
-            <div>
-                <h3>Current Process Allocations</h3>
-                <div id="processHoldingsTable"></div>
-            </div>
-        </div>
-    </div>
     
     <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Particles.js configuration (same as your original)
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#00b4d8"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#00b4d8",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+    </script>
 </body>
 </html>

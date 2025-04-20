@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const optimalSequenceContainer = document.getElementById('optimal-sequence-container');
     const optimalSequenceInput = document.getElementById('optimal-sequence');
     const optimalSetupSection = document.getElementById('optimal-setup-section');
+    const formGroup = document.querySelector('#form-group');
+    const setupSection = document.querySelector(".setup-section" )
     const descriptions = { // desc of algos 
         'fifo': 'First-In-First-Out: Replaces the page that has been in memory the longest.',
         'lru': 'Least Recently Used: Replaces the page that has not been used for the longest period of time.',
@@ -29,6 +31,43 @@ document.addEventListener('DOMContentLoaded', function() {
         algorithmDescriptionSpan.textContent = descriptions[selectedAlgorithm];
         if (selectedAlgorithm === 'optimal') {
             optimalSetupSection.classList.remove('hidden');
+        }
+        else if(selectedAlgorithm === "secondChance"){
+            algorithmDescriptionSpan.textContent = "Second Chance Algorithm : Enhancement of FIFO";
+            formGroup.classList.add("hidden");
+            const NavigateBtn = document.createElement('div');
+            NavigateBtn.className = 'NavigateBtn';
+            NavigateBtn.textContent = 'Simulate';
+            NavigateBtn.type = 'button'; 
+            NavigateBtn.addEventListener('click', () => {
+                window.location.href = 'SecondChanceAlgo/index.html';
+            });
+            
+            setupSection.appendChild(NavigateBtn);
+        }else if(selectedAlgorithm === "pageBuffering"){
+            algorithmDescriptionSpan.textContent = "Page Buffering Algorithm";
+            formGroup.classList.add("hidden");
+            const NavigateBtn = document.createElement('div');
+            NavigateBtn.className = 'NavigateBtn';
+            NavigateBtn.textContent = 'Simulate';
+            NavigateBtn.type = 'button'; 
+            NavigateBtn.addEventListener('click', () => {
+                window.location.href = 'PageBuffering/index.html';
+            });
+            
+            setupSection.appendChild(NavigateBtn);
+        }else if(selectedAlgorithm === "enhancedSecondChance"){
+            algorithmDescriptionSpan.textContent = "Enhanced Second Chance Algorithm";
+            formGroup.classList.add("hidden");
+            const NavigateBtn = document.createElement('div');
+            NavigateBtn.className = 'NavigateBtn';
+            NavigateBtn.textContent = 'Simulate';
+            NavigateBtn.type = 'button'; 
+            NavigateBtn.addEventListener('click', () => {
+                window.location.href = 'EnhancedSecondChance/index.html';
+            });
+            
+            setupSection.appendChild(NavigateBtn);
         } else {
             optimalSetupSection.classList.add('hidden');
         }
